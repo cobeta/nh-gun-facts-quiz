@@ -4,15 +4,15 @@ import { buildDeck, tierFor, BOTTOM_LINE } from './quiz-data.js';
 
 // ─── Palette ───────────────────────────────────────────────────────────
 const P = {
-  cream: '#FBF8F2',
+  cream: '#F6F6F6',
   paper: '#FFFFFF',
-  ink: '#1A1A1A',
-  rust: '#D94F2A',
-  rustDeep: '#B53B17',
-  forest: '#3F7361',
-  forestDeep: '#2C5A4A',
-  forestTint: '#E7F0EC',
-  rustTint: '#FCEADF',
+  ink: '#181818',
+  rust: '#FC5000',
+  rustDeep: '#C85654',
+  forest: '#23B09B',
+  forestDeep: '#1A8A78',
+  forestTint: '#E6F7F4',
+  rustTint: '#FFF3EE',
   muted: '#6B6660',
   hair: 'rgba(26,26,26,0.12)',
 };
@@ -134,11 +134,7 @@ function WelcomeScreen({ onStart }) {
         </Eyebrow>
         <Display style={{ fontSize: 34, color: '#fff', textAlign: 'center' }}>
           What do you{' '}
-          <em style={{
-            fontFamily: '"Instrument Serif", serif',
-            fontStyle: 'italic', fontWeight: 400,
-            letterSpacing: '-0.02em', color: '#FCEADF',
-          }}>actually</em>{' '}
+          <span style={{ color: '#FFCF2D' }}>actually</span>{' '}
           know about guns in&nbsp;NH?
         </Display>
       </div>
@@ -267,7 +263,7 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
       <ProgressBar current={index} total={total} />
 
       <div style={{ marginTop: 24, flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <Display style={{ fontSize: 26, lineHeight: 1.1 }}>
+        <Display style={{ fontSize: 26, lineHeight: 1.1, fontStretch: '100%' }}>
           {question.prompt}
         </Display>
 
@@ -331,6 +327,20 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
 }
 
 // ─── Results screen ────────────────────────────────────────────────────
+const SMART_ITEMS = [
+  { letter: 'S', word: 'Secure',    desc: 'Secure all guns in your home and vehicles.' },
+  { letter: 'M', word: 'Model',     desc: 'Model responsible behavior around firearms.' },
+  { letter: 'A', word: 'Ask',       desc: 'Ask about unsecured guns in homes your children visit.' },
+  { letter: 'R', word: 'Recognize', desc: 'Recognize the risks of teen suicide and depression.' },
+  { letter: 'T', word: 'Tell',      desc: 'Tell your peers to be SMART.' },
+];
+
+const FEATURED_PDFS = [
+  { label: 'Asking About Secure Gun Storage', url: 'https://bs1980402754.wpenginepowered.com/wp-content/uploads/2023/10/Asking-About-Secure-Gun-Storage_09.2023.pdf' },
+  { label: 'Talking to Your Children About Guns', url: 'https://bs1980402754.wpenginepowered.com/wp-content/uploads/2023/02/Talking-to-your-kids-about-guns-06.2024.pdf' },
+  { label: 'Guide to Secure Gun Storage Devices', url: 'https://bs1980402754.wpenginepowered.com/wp-content/uploads/2025/05/Be-SMART-Guide-to-Secure-Gun-Storage-Devices-051925A.pdf' },
+];
+
 const resultStyles = `
   .results-page {
     position: fixed;
@@ -523,17 +533,16 @@ const resultStyles = `
   }
 
   .results-btn-share {
-    flex: 1;
     background: ${P.rust};
     color: #fff;
     border: none;
     border-radius: 999px;
-    padding: 15px 20px;
+    padding: 15px 28px;
     font-family: "Archivo", sans-serif;
-    font-size: 14.5px;
+    font-size: 15px;
     font-weight: 700;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
@@ -563,7 +572,7 @@ const resultStyles = `
   }
 
   .results-credit {
-    padding: 0 24px 28px;
+    padding: 12px 24px 28px;
     font-family: "JetBrains Mono", monospace;
     font-size: 9px;
     font-weight: 600;
@@ -579,7 +588,7 @@ const resultStyles = `
       position: fixed;
       inset: 0;
       z-index: 999;
-      overflow: hidden;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
     }
@@ -587,22 +596,20 @@ const resultStyles = `
     .results-inner {
       flex: 1;
       min-height: 0;
-      max-width: 860px;
+      max-width: 720px;
       margin: 0 auto;
       width: 100%;
-      padding: 0 40px;
+      padding: 0 48px;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    /* Top row: score left, facts grid right */
+    /* Top row: single column on desktop too */
     .results-top-row {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 28px;
-      align-items: start;
-      padding: 24px 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding: 32px 0 20px;
       border-bottom: 1px solid rgba(26,26,26,0.12);
       flex-shrink: 0;
     }
@@ -610,12 +617,9 @@ const resultStyles = `
     .results-hero   { padding: 0; border-bottom: none; }
     .results-facts-section { padding: 0; }
 
-    /* Bottom row: verdict left, actions+credit right */
+    /* Bottom row: verdict full width */
     .results-bottom-row {
-      display: grid;
-      grid-template-columns: 1fr 220px;
-      gap: 24px;
-      align-items: center;
+      display: block;
       flex-shrink: 0;
       padding: 16px 0 12px;
     }
@@ -630,37 +634,314 @@ const resultStyles = `
       justify-content: center;
     }
 
-    .results-side {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-    }
-
-    .results-actions {
-      padding: 0;
-      margin: 0;
-    }
-
     .results-credit {
-      padding: 0;
-      text-align: left;
+      padding: 12px 0 28px;
     }
 
-    /* Compact typography */
-    .results-score-number  { font-size: 56px; }
-    .results-tier-heading  { font-size: 14px; }
-    .results-tier-body     { font-size: 11.5px; }
-    .results-fact-stat     { font-size: 16px; }
-    .results-fact-label    { font-size: 10px; }
-    .results-verdict-stat  { font-size: 36px; margin-bottom: 6px; }
-    .results-verdict-text  { font-size: 11.5px; }
-    .results-verdict-eyebrow { margin-bottom: 6px; }
+    /* Desktop typography */
+    .results-score-number  { font-size: 88px; }
+    .results-tier-heading  { font-size: 20px; font-stretch: 100%; }
+    .results-tier-body     { font-size: 14px; }
+    .results-fact-stat     { font-size: 22px; font-stretch: 100%; }
+    .results-fact-label    { font-size: 12px; }
+    .results-verdict-stat  { font-size: 52px; margin-bottom: 8px; }
+    .results-verdict-text  { font-size: 14px; }
+    .results-verdict-eyebrow { margin-bottom: 8px; }
 
-    .results-score-row     { margin-bottom: 10px; }
-    .results-eyebrow       { margin-bottom: 10px; }
-    .results-section-label { margin-bottom: 8px; }
-    .results-fact-cell     { padding: 10px 12px; gap: 4px; }
+    .results-score-row     { margin-bottom: 12px; }
+    .results-eyebrow       { margin-bottom: 12px; }
+    .results-section-label { margin-bottom: 12px; }
+    .results-fact-cell     { padding: 14px 16px; gap: 6px; }
+
+    .results-besmart-section {
+      padding: 24px 0 40px;
+    }
+
+    .results-besmart-intro {
+      margin-bottom: 20px;
+    }
+
+    .results-besmart-heading {
+      font-size: 36px;
+    }
+
+    .results-smart-row {
+      padding: 14px 18px;
+    }
+
+    .results-smart-letter {
+      font-size: 30px;
+      min-width: 40px;
+    }
+
+    .results-smart-word { font-size: 15px; }
+    .results-smart-desc { font-size: 13px; }
+
+    .results-resources-block { margin-bottom: 14px; }
+
+    .results-pdf-cards { gap: 5px; }
+
+    .results-pdf-card { padding: 10px 14px; }
+
+    .results-pdf-card-label { font-size: 13px; }
+
+    .results-besmart-cta {
+      flex-direction: row;
+      align-items: center;
+      gap: 20px;
+      padding: 18px 22px;
+    }
+
+    .results-besmart-cta-text { flex: 1; }
+
+    .results-share-row {
+      flex-direction: row;
+      justify-content: center;
+      gap: 20px;
+      padding: 28px 0 8px;
+    }
+  }
+`;
+
+const beSmartStyles = `
+  .results-share-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 28px 0 8px;
+    border-top: 1px solid rgba(26,26,26,0.08);
+    margin-top: 24px;
+  }
+
+  .results-besmart-section {
+    padding: 28px 24px 36px;
+    border-top: 1px solid rgba(26,26,26,0.1);
+  }
+
+  .results-besmart-intro {
+    margin-bottom: 20px;
+  }
+
+  .results-besmart-heading {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: clamp(28px, 7vw, 40px);
+    font-weight: 900;
+    font-stretch: 125%;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: ${P.ink};
+    margin: 8px 0 0;
+  }
+
+  .results-besmart-highlight {
+    color: ${P.forest};
+  }
+
+  .results-smart-list {
+    border: 1px solid ${P.hair};
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+  }
+
+  .results-smart-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 14px 18px;
+    border-left: 3px solid ${P.forest};
+    background: ${P.paper};
+    border-bottom: 1px solid ${P.hair};
+    transition: background 150ms ease;
+  }
+
+  .results-smart-row:last-child {
+    border-bottom: none;
+  }
+
+  .results-smart-row:hover {
+    background: ${P.forestTint};
+  }
+
+  .results-smart-letter {
+    font-family: "JetBrains Mono", monospace;
+    font-size: clamp(24px, 5vw, 32px);
+    font-weight: 700;
+    color: ${P.forest};
+    min-width: 40px;
+    line-height: 1;
+  }
+
+  .results-smart-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .results-smart-word {
+    font-family: "Archivo", sans-serif;
+    font-size: clamp(14px, 2.5vw, 16px);
+    font-weight: 700;
+    color: ${P.ink};
+    letter-spacing: -0.01em;
+  }
+
+  .results-smart-desc {
+    font-family: "Archivo", sans-serif;
+    font-size: clamp(12px, 1.8vw, 13.5px);
+    color: ${P.muted};
+    line-height: 1.4;
+  }
+
+  .results-resources-block {
+    margin-bottom: 16px;
+  }
+
+  .results-resources-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: ${P.forest};
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .results-resources-label::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: ${P.forest};
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  .results-pdf-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .results-pdf-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    background: ${P.paper};
+    border: 1px solid ${P.hair};
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 150ms ease, border-color 150ms ease;
+  }
+
+  .results-pdf-card:hover {
+    background: ${P.forestTint};
+    border-color: ${P.forest};
+  }
+
+  .results-pdf-card-icon {
+    font-size: 13px;
+    color: ${P.forest};
+    font-weight: 700;
+    flex-shrink: 0;
+    width: 20px;
+    text-align: center;
+  }
+
+  .results-pdf-card-label {
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: ${P.ink};
+    line-height: 1.3;
+  }
+
+  .results-besmart-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    background: ${P.forestDeep};
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .results-besmart-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.03) 0 1px,
+      transparent 1px 8px
+    );
+    pointer-events: none;
+  }
+
+  .results-besmart-cta-heading {
+    font-family: "Archivo", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    font-stretch: 125%;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin-bottom: 4px;
+  }
+
+  .results-besmart-cta-sub {
+    font-family: "Archivo", sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.65);
+  }
+
+  .results-besmart-cta-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .results-besmart-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    color: ${P.forestDeep};
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 9px 16px;
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition: opacity 150ms ease;
+  }
+
+  .results-besmart-cta-primary:hover { opacity: 0.88; }
+
+  .results-besmart-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    border-radius: 999px;
+    padding: 9px 16px;
+    border: 1px solid rgba(255,255,255,0.3);
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: border-color 150ms ease, color 150ms ease;
+  }
+
+  .results-besmart-cta-secondary:hover {
+    border-color: rgba(255,255,255,0.7);
+    color: #fff;
   }
 `;
 
@@ -694,6 +975,7 @@ function ResultsScreen({ score, total, onRetake }) {
   const jsx = (
     <>
       <style>{resultStyles}</style>
+      <style>{beSmartStyles}</style>
       <div className="results-page">
         <div className="results-inner">
 
@@ -736,19 +1018,81 @@ function ResultsScreen({ score, total, onRetake }) {
                 The votes didn't reflect the people.
               </div>
             </div>
+          </div>
 
-            <div className="results-side">
-              <div className="results-actions">
-                <button className="results-btn-share" onClick={share}>
-                  Share the facts <span style={{ fontSize: 16 }}>↗</span>
-                </button>
-                <button className="results-btn-retake" onClick={onRetake}>
-                  Retake
-                </button>
+          <div className="results-besmart-section">
+            <div className="results-besmart-intro">
+              <div className="results-section-label">What you can do</div>
+              <h2 className="results-besmart-heading">
+                Be <span className="results-besmart-highlight">SMART</span>.
+              </h2>
+            </div>
+            <div className="results-smart-list">
+              {SMART_ITEMS.map(({ letter, word, desc }) => (
+                <div className="results-smart-row" key={letter}>
+                  <div className="results-smart-letter">{letter}</div>
+                  <div className="results-smart-content">
+                    <div className="results-smart-word">{word}</div>
+                    <div className="results-smart-desc">{desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="results-resources-block">
+              <div className="results-resources-label">Useful resources</div>
+              <div className="results-pdf-cards">
+                {FEATURED_PDFS.map(({ label, url }) => (
+                  <a
+                    key={label}
+                    className="results-pdf-card"
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span className="results-pdf-card-icon">↓</span>
+                    <span className="results-pdf-card-label">{label}</span>
+                  </a>
+                ))}
               </div>
-              <div className="results-credit">
-                Facts compiled by 603 GVP · NH DHHS · UNH Survey Center · EFSGV
+            </div>
+
+            <div className="results-besmart-cta">
+              <div className="results-besmart-cta-text">
+                <div className="results-besmart-cta-heading">More from Be SMART</div>
+                <div className="results-besmart-cta-sub">
+                  Be SMART is a national program helping parents and caregivers
+                  reduce child gun deaths through secure storage.
+                </div>
               </div>
+              <div className="results-besmart-cta-links">
+                <a
+                  className="results-besmart-cta-primary"
+                  href="https://besmartforkids.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  besmartforkids.org ↗
+                </a>
+                <a
+                  className="results-besmart-cta-secondary"
+                  href="https://besmartforkids.org/share/in-your-community"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Community resources ↗
+                </a>
+              </div>
+            </div>
+            <div className="results-share-row" style={{ marginTop: 16 }}>
+              <button className="results-btn-share" onClick={share}>
+                Share this quiz ↗
+              </button>
+              <button className="results-btn-retake" onClick={onRetake}>
+                Retake
+              </button>
+            </div>
+            <div className="results-credit">
+              Facts compiled by 603 GVP · NH DHHS · UNH Survey Center · EFSGV
             </div>
           </div>
 
