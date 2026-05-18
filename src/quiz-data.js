@@ -1,81 +1,116 @@
 export const QUESTIONS = [
   {
     id: 'q1',
-    prompt: "In New Hampshire, what's the most common cause of gun death?",
+    prompt: "About 1 in 3 American homes with children have a gun. Of those, what percentage store it both locked and unloaded — the way experts recommend?",
     answers: [
-      { text: 'Street violence', correct: false, feedback: "Not even close. The answer is suicide — accounting for 87% of all NH gun deaths. And when a gun is used in a suicide attempt, it's almost always fatal. That's why waiting periods between purchase and possession save lives." },
-      { text: 'Mass shootings', correct: false, feedback: "Not quite. It's actually suicide — 87% of NH gun deaths. Mass shootings dominate the headlines but suicide is the quiet epidemic. A gun makes a suicide attempt nearly always fatal, which is why waiting periods matter." },
-      { text: 'Hunting accidents', correct: false, feedback: "Nope. Suicide accounts for 87% of NH gun deaths. This surprises most people — it's not what we see on the news, but it's where the real harm is happening." },
-      { text: 'Suicide', correct: true, feedback: "Correct. 87% of NH gun deaths are suicides. When a firearm is involved in a suicide attempt, it's almost always lethal — which is exactly why waiting periods between purchase and possession save lives." },
-    ],
+      {
+        text: 'About 75%',
+        correct: false,
+        feedback: "Only about 35% of gun-owning households with kids store firearms both locked and unloaded. In NH, where about 41% of adults live in homes with firearms, that gap represents a lot of kids."
+      },
+      {
+        text: 'About 55%',
+        correct: false,
+        feedback: "Higher than you'd expect, but still lower. About 35% store guns both locked and unloaded — the rest use only one precaution, or neither."
+      },
+      {
+        text: 'About 35%',
+        correct: true,
+        feedback: "Correct — and it surprises most people. Only about 35% of gun-owning parents store firearms both locked and unloaded. Another 21% store them unlocked and loaded. In NH, where about 41% of adults live in homes with guns, that math adds up fast."
+      },
+      {
+        text: 'Almost all of them',
+        correct: false,
+        feedback: "Far from it. Only about 35% of gun-owning households with kids store all guns both locked and unloaded. About 1 in 5 store them unlocked and loaded."
+      },
+    ]
   },
   {
     id: 'q2',
-    prompt: "NH has more gun deaths per year than deaths from what other cause?",
+    prompt: "A parent says 'don't worry, the gun is hidden.' Researchers asked kids ages 5–14 whose parents said the same thing. What did they find?",
     answers: [
-      { text: 'Drug overdoses', correct: false, feedback: "Not that one. It's actually car crashes. Between 2019–2023, NH averaged 141 gun deaths per year vs. 118 traffic fatalities. Politicians who vow to “crack down on reckless drivers” while doing nothing on gun safety have some explaining to do." },
-      { text: 'Heart disease', correct: false, feedback: "Not that one. It's car crashes. NH averaged 141 gun deaths per year vs. 118 traffic deaths (2019–2023). That comparison tends to get people's attention." },
-      { text: 'Car crashes', correct: true, feedback: "Correct. 141 gun deaths per year vs. 118 traffic fatalities on average. Politicians who vow to crack down on reckless drivers while opposing gun safety measures haven't looked at these numbers." },
-      { text: 'Workplace accidents', correct: false, feedback: "Not that one. Car crashes is the answer — NH averaged 141 gun deaths vs. 118 traffic deaths per year between 2019–2023." },
-    ],
+      {
+        text: "Kids had no idea where it was",
+        correct: false,
+        feedback: "Actually, 75% of kids in gun-owning homes know where the gun is stored — even when parents think it's hidden. And 22% of parents didn't know their child had already handled it."
+      },
+      {
+        text: "About 1 in 4 kids knew",
+        correct: false,
+        feedback: "Much higher than that. 75% of kids know where the gun is, even when parents think it's out of reach. Nearly a quarter of parents didn't know their child had already handled it."
+      },
+      {
+        text: "About half knew",
+        correct: false,
+        feedback: "Even higher. Researchers found that 75% of kids in gun-owning homes know where the gun is stored. And 22% of parents didn't know their child had already handled it."
+      },
+      {
+        text: "About 3 in 4 kids knew",
+        correct: true,
+        feedback: "Correct. 75% of kids in gun-owning homes know where the gun is — even when parents believe it's safely hidden. And 22% of parents were unaware that their child had already handled it. Kids are better at finding things than we think."
+      },
+    ]
   },
   {
     id: 'q3',
-    prompt: "What percentage of NH residents support universal background checks for gun purchases?",
+    prompt: "Before a playdate, parents ask about allergies, pets, and supervision. How many ask 'is there an unlocked gun in your home?'",
     answers: [
-      { text: "About half — it's pretty divisive", correct: false, feedback: "Way off. It's 84% — and here's the kicker: gun-owner and non-gun-owner households have virtually identical opinions on this. It's not a gun owner vs. non-owner issue. It's a policy vs. politics issue." },
-      { text: 'Around 60%', correct: false, feedback: "Higher than that. 84% of NH residents support background checks, according to a 2023 UNH Survey. Even more striking: gun owners and non-gun owners agree almost equally." },
-      { text: 'Around 75%', correct: false, feedback: "Close, but higher. 84% support background checks. 75% support protective orders for people who may be a danger to themselves or others. 66% support waiting periods. And gun owners and non-gun owners largely agree on all three." },
-      { text: '84%', correct: true, feedback: "Correct. And gun owners and non-gun owners have virtually identical views on this. This isn't a partisan split — it's a gap between what voters want and what lawmakers are doing." },
-    ],
-  },
-  {
-    id: 'q4',
-    prompt: "Where do most stolen guns in the US come from?",
-    answers: [
-      { text: 'Gun stores', correct: false, feedback: "Not stores. Cars are the biggest source — at least one gun is stolen from a vehicle every 9 minutes in the US. NH doesn't require employers to ban guns from parking lots, making every lot a potential source for criminals." },
-      { text: 'Private sales', correct: false, feedback: "Not private sales. It's cars. A gun is stolen from a vehicle at least every 9 minutes across the US. NH currently has no law requiring employers to restrict guns in parking lots." },
-      { text: 'Residential break-ins', correct: false, feedback: "Good guess, but no. Cars are actually the largest source. At least one gun is stolen from a vehicle every 9 minutes in the US — and NH has no law allowing employers to ban guns from their parking lots." },
-      { text: 'Cars', correct: true, feedback: "Correct. At least one gun is stolen from a car every 9 minutes in the US. NH doesn't allow employers to ban guns in their parking lots — making every parking lot a potential source for criminals." },
-    ],
-  },
-  {
-    id: 'q5',
-    prompt: "Does New Hampshire have a state law creating Gun-Free School Zones?",
-    answers: [
-      { text: 'Yes — state law protects all schools', correct: false, feedback: "Actually, no. There is no NH state law on this — only a federal one. In 2018, several school districts were informed by the AG's office that under NH law, only the State Legislature can regulate firearms. Students, teachers, and administrators were caught in the confusion." },
-      { text: 'Yes — but only public schools', correct: false, feedback: "No state law exists at all. Only the federal law applies. In 2018, the NH Attorney General's Office had to inform school districts that the state has no such law — and that only the Legislature can regulate firearms." },
-      { text: 'Only within 1,000 feet of a school', correct: false, feedback: "That's the federal rule, not a state one. New Hampshire has no state law — only the federal Gun-Free School Zones Act applies. In 2018 the AG's office had to clarify to school districts that only the Legislature can regulate firearms in NH." },
-      { text: 'No', correct: true, feedback: "Correct — and that surprises most people. There's no NH state law. Only the federal Gun-Free School Zones Act applies. In 2018, school districts were blindsided when the AG's office clarified that only the State Legislature can regulate firearms in NH — leaving students, educators, and police in a confusing and risky situation." },
-    ],
-  },
-  {
-    id: 'q6',
-    prompt: "Over the last decade, NH's gun death rate has:",
-    answers: [
-      { text: 'Stayed roughly flat', correct: false, feedback: "Not flat. It's gone up 57% — driven almost entirely by gun suicides. NH's gun suicide rate had the highest increase in the country from 2013 to 2022. Gun deaths among young people ages 15–34 jumped 26% in just one year." },
-      { text: 'Dropped, thanks to safety programs', correct: false, feedback: "Actually the opposite. Gun deaths in NH rose 57% over the last decade. The gun suicide rate had the fastest increase in the nation from 2013–2022. Young people ages 15–34 saw a 26% spike in gun deaths between 2021 and 2022 alone." },
-      { text: 'Increased by about 20%', correct: false, feedback: "Higher than that. NH's gun death rate has increased 57% over the last decade — almost all from gun suicides, which saw the largest rate increase in the country from 2013 to 2022." },
-      { text: 'Increased by 57%', correct: true, feedback: "Correct — and it's alarming. Almost entirely driven by gun suicides. NH had the fastest-growing gun suicide rate in the country (2013–2022). Deaths among people ages 15–34 jumped 26% between 2021 and 2022 alone." },
-    ],
+      {
+        text: "Most parents ask",
+        correct: false,
+        feedback: "The opposite is true. More than 60% of parents have never asked. Nearly 20% of unintentional firearm deaths in children happen at a friend's home — not their own."
+      },
+      {
+        text: "About half ask",
+        correct: false,
+        feedback: "Far fewer. More than 60% of parents have never asked about guns before a playdate. Most said it simply never occurred to them."
+      },
+      {
+        text: "About 2 in 3 ask",
+        correct: false,
+        feedback: "Actually far fewer. More than 60% have never asked — meaning fewer than 4 in 10 ever have. Most parents say it just didn't occur to them."
+      },
+      {
+        text: "Fewer than 4 in 10",
+        correct: true,
+        feedback: "Correct. More than 60% of parents have never asked. Nearly 20% of unintentional firearm deaths in children happen at a friend's home. Most parents say it simply never occurred to them to ask."
+      },
+    ]
   },
 ];
 
 export const BOTTOM_LINE = [
-  { stat: '87%', label: 'of NH gun deaths are suicides' },
-  { stat: '141 vs 118', label: 'gun deaths per year vs. traffic deaths in NH' },
-  { stat: '84%', label: 'of NH residents support background checks — gun owners included' },
-  { stat: '75%', label: 'support protective orders for people in crisis' },
-  { stat: '66%', label: 'support waiting periods between purchase and possession' },
-  { stat: '+57%', label: "NH's gun death rate over a decade — fastest-growing gun suicide rate in the country" },
-  { stat: '2025', label: 'NH lawmakers voted down the background check bill anyway' },
+  { stat: '1 in 3', label: 'US homes with children have at least one gun' },
+  { stat: '35%', label: 'of gun-owning parents store firearms both locked and unloaded' },
+  { stat: '75%', label: 'of kids in gun-owning homes know where the gun is stored' },
+  { stat: '4.6M', label: 'children in the US live with a loaded, unlocked gun' },
+  { stat: '~20%', label: "of unintentional child gun deaths happen at a friend's home" },
+  { stat: '8/day', label: 'children in the US are unintentionally injured or killed by improperly stored guns' },
+  // Index [6] is the verdict stat — used in the dark green "verdict" block
+  { stat: 'Most', label: 'gun-owning parents say they would not mind being asked about storage before a playdate' },
 ];
 
 export const TIERS = [
-  { min: 6, heading: 'Perfect score.', body: "You're already in the know. You clearly follow this issue closely. The facts are stark, and now you can share them. Most Granite Staters support action — the gap is between public opinion and political will." },
-  { min: 4, heading: 'Solid. You know more than most.', body: "You've got the big picture. A few of these facts are hard to find in the news — which is part of the problem." },
-  { min: 2, heading: 'Some surprises, right?', body: "These numbers don't make the front page — but they should. The good news: now you know them, and so can the people you talk to." },
-  { min: 0, heading: "Eye-opening, wasn't it?", body: "Don't feel bad — most of these facts are buried. That's exactly why this quiz exists. Share it and change that." },
+  {
+    min: 3,
+    heading: 'You knew all three.',
+    body: "You're ahead of most parents. These stats don't make headlines, but they matter every time your kid walks into someone else's house."
+  },
+  {
+    min: 2,
+    heading: 'Mostly there.',
+    body: "A couple of these facts catch most people off guard — especially the one about kids knowing where guns are hidden."
+  },
+  {
+    min: 1,
+    heading: 'Some surprises in there.',
+    body: "You're not alone — most parents have never thought through these numbers. That's exactly why this quiz exists."
+  },
+  {
+    min: 0,
+    heading: 'Eye-opening, right?',
+    body: "Don't feel bad. These facts are buried. Now you know them — and so can the people you share this with."
+  },
 ];
 
 export function tierFor(score) {

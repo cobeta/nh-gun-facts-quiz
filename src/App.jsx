@@ -102,7 +102,7 @@ function WelcomeScreen({ onStart }) {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ width: 10, height: 10, background: P.rust, borderRadius: 2 }} />
-          <Eyebrow color="#fff">Gun Facts</Eyebrow>
+          <Eyebrow color="#fff">Safe Storage</Eyebrow>
         </div>
         <Eyebrow color="rgba(255,255,255,0.7)">New Hampshire</Eyebrow>
       </div>
@@ -130,12 +130,12 @@ function WelcomeScreen({ onStart }) {
       {/* title — fixed size */}
       <div style={{ padding: '0 24px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
         <Eyebrow color="rgba(255,255,255,0.8)" style={{ marginBottom: 10, textAlign: 'center' }}>
-          Six questions · Two minutes
+          Three questions · Two minutes
         </Eyebrow>
         <Display style={{ fontSize: 34, color: '#fff', textAlign: 'center' }}>
           What do you{' '}
           <span style={{ color: '#FFCF2D' }}>actually</span>{' '}
-          know about guns in&nbsp;NH?
+          know about guns in your kids'&nbsp;world?
         </Display>
       </div>
 
@@ -226,7 +226,7 @@ function ProgressBar({ current, total }) {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
         <Eyebrow>Question {String(current + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</Eyebrow>
-        <Eyebrow color={P.muted}>NH Gun Facts</Eyebrow>
+        <Eyebrow color={P.muted}>Safe Storage Quiz</Eyebrow>
       </div>
       <div style={{ display: 'flex', gap: 4 }}>
         {Array.from({ length: total }).map((_, i) => (
@@ -500,18 +500,24 @@ const resultStyles = `
     font-weight: 600;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: ${P.rust};
+    color: rgba(255,255,255,0.55);
     margin-bottom: 12px;
   }
 
   .results-verdict-stat {
-    font-size: clamp(52px, 12vw, 88px);
+    display: none;
+  }
+
+  .results-verdict-headline {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: clamp(20px, 4.5vw, 28px);
     font-weight: 900;
     font-stretch: 125%;
-    letter-spacing: -0.04em;
-    line-height: 0.9;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
     color: #fff;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
+    text-wrap: balance;
   }
 
   .results-verdict-text {
@@ -569,6 +575,10 @@ const resultStyles = `
 
   .results-btn-retake:hover {
     color: ${P.ink};
+  }
+
+  details[open] summary span {
+    transform: rotate(90deg);
   }
 
   .results-credit {
@@ -644,7 +654,7 @@ const resultStyles = `
     .results-tier-body     { font-size: 14px; }
     .results-fact-stat     { font-size: 22px; font-stretch: 100%; }
     .results-fact-label    { font-size: 12px; }
-    .results-verdict-stat  { font-size: 52px; margin-bottom: 8px; }
+    .results-verdict-headline { font-size: 22px; margin-bottom: 10px; }
     .results-verdict-text  { font-size: 14px; }
     .results-verdict-eyebrow { margin-bottom: 8px; }
 
@@ -954,7 +964,7 @@ function ResultsScreen({ score, total, onRetake }) {
   const verdict = BOTTOM_LINE[6];
 
   async function share() {
-    const msg = `I scored ${score}/${total} on the NH Gun Facts quiz. Most Granite Staters support background checks, protective orders, and waiting periods. Try it yourself.`;
+    const msg = `I scored ${score}/${total} on the Safe Storage quiz. 75% of kids know where the gun is — even when parents think it's hidden. Try it yourself.`;
     try {
       if (navigator.share) {
         await navigator.share({ title: 'NH Gun Facts Quiz', text: msg });
@@ -981,7 +991,7 @@ function ResultsScreen({ score, total, onRetake }) {
 
           <div className="results-top-row">
             <div className="results-hero">
-              <div className="results-eyebrow">NH Gun Facts · Your Results</div>
+              <div className="results-eyebrow">Safe Storage · Your Results</div>
               <div className="results-score-row">
                 <div className="results-score-number">
                   {score}<span className="results-score-denom">/{total}</span>
@@ -1010,12 +1020,15 @@ function ResultsScreen({ score, total, onRetake }) {
 
           <div className="results-bottom-row">
             <div className="results-verdict">
-              <div className="results-verdict-eyebrow">What lawmakers did about it</div>
-              <div className="results-verdict-stat">{verdict.stat}</div>
+              <div className="results-verdict-eyebrow">What might surprise you most</div>
+              <div className="results-verdict-headline">
+                Most gun-owning parents wouldn't mind being asked.
+              </div>
               <div className="results-verdict-text">
-                <strong>NH lawmakers voted down the background check bill anyway.</strong>{' '}
-                84% of residents support it. Gun owners and non-gun owners agree.
-                The votes didn't reflect the people.
+                Studies suggest the barrier isn't hostility —{' '}
+                <strong>it's that the question doesn't occur to people.</strong>{' '}
+                "Do you have guns at home, and how are they stored?" is a
+                normal safety question, like asking about a pool.
               </div>
             </div>
           </div>
@@ -1038,6 +1051,39 @@ function ResultsScreen({ score, total, onRetake }) {
                 </div>
               ))}
             </div>
+
+            <a
+              href="https://besmartforkids.org/secure-gun-storage/resources/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'block', textDecoration: 'none',
+                background: P.forestTint, border: `1.5px solid ${P.forest}`,
+                borderRadius: 10, padding: '18px 20px', marginBottom: 20,
+              }}
+            >
+              <div style={{
+                fontFamily: '"JetBrains Mono", monospace', fontSize: 10,
+                fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: P.forest, marginBottom: 6,
+              }}>
+                Not sure how to bring it up?
+              </div>
+              <div style={{
+                fontFamily: '"Archivo", sans-serif', fontSize: 15.5,
+                fontWeight: 800, letterSpacing: '-0.02em', color: P.ink,
+                marginBottom: 4,
+              }}>
+                Get conversation starters ↗
+              </div>
+              <div style={{
+                fontFamily: '"Archivo", sans-serif', fontSize: 13,
+                color: P.muted, lineHeight: 1.4,
+              }}>
+                Be SMART has ready-to-use scripts for asking other parents about gun storage — so you don't have to figure out the words yourself.
+              </div>
+            </a>
+
             <div className="results-resources-block">
               <div className="results-resources-label">Useful resources</div>
               <div className="results-pdf-cards">
@@ -1060,8 +1106,7 @@ function ResultsScreen({ score, total, onRetake }) {
               <div className="results-besmart-cta-text">
                 <div className="results-besmart-cta-heading">More from Be SMART</div>
                 <div className="results-besmart-cta-sub">
-                  Be SMART is a national program helping parents and caregivers
-                  reduce child gun deaths through secure storage.
+                  A national program helping parents and caregivers reduce child gun deaths through secure storage.
                 </div>
               </div>
               <div className="results-besmart-cta-links">
@@ -1091,9 +1136,70 @@ function ResultsScreen({ score, total, onRetake }) {
                 Retake
               </button>
             </div>
-            <div className="results-credit">
-              Facts compiled by 603 GVP · NH DHHS · UNH Survey Center · EFSGV
-            </div>
+            <details style={{ marginTop: 20, borderTop: `1px solid ${P.hair}`, paddingTop: 16 }}>
+              <summary style={{
+                fontFamily: '"JetBrains Mono", monospace', fontSize: 10,
+                fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
+                color: P.muted, cursor: 'pointer', listStyle: 'none',
+                display: 'flex', alignItems: 'center', gap: 8,
+                userSelect: 'none',
+              }}>
+                <span style={{
+                  display: 'inline-block', fontSize: 9, transition: 'transform 200ms ease',
+                }}>▶</span>
+                Sources
+              </summary>
+              <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
+                {[
+                  {
+                    label: 'Q1 — Safe storage rates (35% locked and unloaded)',
+                    cite: 'Miller et al., JAMA Network Open, 2026',
+                    url: 'https://jamanetwork.com/journals/jamanetworkopen',
+                  },
+                  {
+                    label: 'Q1 — NH gun ownership rate (~41% of adults)',
+                    cite: 'CBS News / state gun ownership survey',
+                    url: 'https://www.cbsnews.com/pictures/gun-ownership-rates-by-state/',
+                  },
+                  {
+                    label: 'Q2 — 75% of kids know where the gun is stored',
+                    cite: 'Baxley & Miller (2006), Pediatrics; via UConn ARMS Center (2024)',
+                    url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/',
+                  },
+                  {
+                    label: 'Q3 — 60%+ of parents have never asked before a playdate',
+                    cite: 'Garbutt et al., Pediatrics, 2024 (Lurie Children\'s Hospital)',
+                    url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061',
+                  },
+                  {
+                    label: 'Q3 — ~20% of unintentional child gun deaths at a friend\'s home',
+                    cite: 'Seattle Children\'s Hospital',
+                    url: 'https://www.seattlechildrens.org/healthy-tides/guns-stored-safely/',
+                  },
+                  {
+                    label: '4.6M children live with a loaded, unlocked gun',
+                    cite: 'National Firearm Survey (2021) via Agree to Agree',
+                    url: 'https://agreetoagree.org/conversation-guides/guns-in-the-home',
+                  },
+                  {
+                    label: '8 children per day unintentionally injured or killed',
+                    cite: 'Seattle Children\'s Hospital',
+                    url: 'https://www.seattlechildrens.org/healthy-tides/guns-stored-safely/',
+                  },
+                ].map(({ label, cite, url }) => (
+                  <div key={label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <div style={{
+                      fontFamily: '"Archivo", sans-serif', fontSize: 12,
+                      fontWeight: 600, color: P.ink, lineHeight: 1.4,
+                    }}>{label}</div>
+                    <a href={url} target="_blank" rel="noopener noreferrer" style={{
+                      fontFamily: '"Archivo", sans-serif', fontSize: 11.5,
+                      color: P.forest, textDecoration: 'none', lineHeight: 1.4,
+                    }}>{cite} ↗</a>
+                  </div>
+                ))}
+              </div>
+            </details>
           </div>
 
         </div>
