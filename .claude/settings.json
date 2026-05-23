@@ -3,7 +3,18 @@
     "allow": [
       "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
       "Bash(git init *)",
-      "Bash(git commit -m 'Initial commit: NH Gun Facts Quiz *)"
+      "Bash(git commit -m 'Initial commit: NH Gun Facts Quiz *)",
+      "Bash(git branch *)",
+      "Bash(gh repo *)",
+      "WebFetch(domain:besmartforkids.org)",
+      "Bash(curl -s https://besmartforkids.org/)",
+      "Bash(curl -s 'https://bs1980402754.wpenginepowered.com/wp-content/themes/dod/build/bundle.2078c173.css')",
+      "Bash(grep -oE '#[0-9a-fA-F]{3,6}|rgb[a]?\\\\\\([^\\)]+\\\\\\)')",
+      "Bash(grep -oE '--[^:]+:[^;]+')",
+      "Bash(grep -oE 'background[^;]*#[0-9a-fA-F]{3,6}|color[^;]*#[0-9a-fA-F]{3,6}|border[^;]*#[0-9a-fA-F]{3,6}')",
+      "Bash(npm run *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

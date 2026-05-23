@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { buildDeck, tierFor, BOTTOM_LINE } from './quiz-data.js';
+import heroBg1 from './assets/hero-bg-1.png';
+import heroBg2 from './assets/hero-bg-2.png';
 
 // ─── Palette ───────────────────────────────────────────────────────────
 const P = {
@@ -82,81 +84,174 @@ function NHStamp({ color = '#fff' }) {
 }
 
 // ─── Welcome ───────────────────────────────────────────────────────────
-function WelcomeScreen({ onStart }) {
+function WelcomeScreen({ onStart, onAbout, variant = 'illustrated' }) {
+  if (variant === 'photo') {
+    return <WelcomePhoto onStart={onStart} onAbout={onAbout} />;
+  }
+  return <WelcomeIllustrated onStart={onStart} onAbout={onAbout} />;
+}
+
+// Illustrated variant — clean image hero, title + CTA bottom-anchored
+function WelcomeIllustrated({ onStart, onAbout }) {
   return (
     <div style={{
-      height: '100%', background: P.forest, color: '#fff',
-      display: 'flex', flexDirection: 'column',
-      boxSizing: 'border-box', position: 'relative', overflow: 'hidden',
+      height: '100%', position: 'relative', overflow: 'hidden',
+      display: 'flex', flexDirection: 'column', boxSizing: 'border-box',
     }}>
+      {/* Background image */}
       <div style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none',
-        background: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 6px)',
+        position: 'absolute', inset: 0,
+        backgroundImage: `url(${heroBg1})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center top',
       }} />
 
-      {/* header — fixed size */}
+      {/* Gradient overlay — light at top, darkens toward bottom */}
       <div style={{
-        padding: '32px 24px 0', flexShrink: 0,
-        display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start',
-        position: 'relative', zIndex: 1,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <div style={{ width: 10, height: 10, background: P.rust, borderRadius: 2 }} />
-          <Eyebrow color="#fff">Safe Storage</Eyebrow>
-        </div>
-        <Eyebrow color="rgba(255,255,255,0.7)">New Hampshire</Eyebrow>
-      </div>
+        position: 'absolute', inset: 0,
+        background: 'none',
+      }} />
 
-      {/* stamp — grows to fill available space, shrinks on short screens */}
+      {/* Title + CTA — anchored at 1/3 from top */}
       <div style={{
-        flex: 1, minHeight: 0,
-        position: 'relative', zIndex: 1,
-        display: 'flex', justifyContent: 'center', alignItems: 'center',
+        position: 'absolute', top: '33%', left: 0, right: 0,
+        padding: '16px 24px', zIndex: 1,
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
+        background: 'rgba(0,0,0,0.08)',
       }}>
-        <div style={{ position: 'relative' }}>
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-            transform: 'translate(6px, 6px)',
-            opacity: 0, animation: 'stampShadow 400ms ease 1050ms forwards',
-          }}>
-            <svg viewBox="0 0 150 290" width="104" height="200" style={{ display: 'block', overflow: 'visible' }}>
-              <path d={NH_PATH} fill={P.rust} fillOpacity="0.7" />
-            </svg>
-          </div>
-          <NHStamp color="#fff" />
-        </div>
-      </div>
-
-      {/* title — fixed size */}
-      <div style={{ padding: '0 24px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
-        <Eyebrow color="rgba(255,255,255,0.8)" style={{ marginBottom: 10, textAlign: 'center' }}>
-          Three questions · Two minutes
+        <Eyebrow color="#fff" style={{ marginBottom: 10, textAlign: 'center' }}>
+          Four questions · Two minutes
         </Eyebrow>
-        <Display style={{ fontSize: 34, color: '#fff', textAlign: 'center' }}>
-          What do you{' '}
-          <span style={{ color: '#FFCF2D' }}>actually</span>{' '}
-          know about guns in your kids'&nbsp;world?
+        <Display style={{
+          fontSize: 42, color: '#fff', textAlign: 'center',
+          fontStretch: '100%',
+        }}>
+          Think you're{' '}
+          <span style={{ color: P.forest }}>SMART</span>{' '}
+          about gun safety?
         </Display>
+        <div style={{ marginTop: 20 }}>
+          <button onClick={onStart}
+            style={{
+              background: P.rust, color: '#fff', border: 'none',
+              borderRadius: 999, padding: '16px 24px', width: '100%',
+              fontFamily: '"Archivo", sans-serif', fontSize: 16, fontWeight: 700,
+              letterSpacing: '-0.005em', cursor: 'pointer',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              boxShadow: '0 4px 16px rgba(252,80,0,0.35)',
+            }}>
+            <span>Take the quiz</span>
+            <span style={{ fontSize: 20, lineHeight: 1 }}>→</span>
+          </button>
+          <div style={{ marginTop: 12, textAlign: 'center' }}>
+            <Eyebrow color="#fff">No login · No data kept</Eyebrow>
+          </div>
+        </div>
       </div>
 
-      {/* CTA — fixed size */}
+      {/* About link — bottom */}
+      <div style={{
+        position: 'absolute', bottom: 16, left: 0, right: 0,
+        textAlign: 'center', zIndex: 1,
+      }}>
+        <button onClick={onAbout}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+            fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
+            textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)',
+            textDecoration: 'underline', textUnderlineOffset: 3,
+          }}>
+          About this quiz
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// Photo variant — editorial layout, title left-aligned mid-screen, heavier vignette
+function WelcomePhoto({ onStart, onAbout }) {
+  return (
+    <div style={{
+      height: '100%', position: 'relative',
+      display: 'flex', flexDirection: 'column', boxSizing: 'border-box',
+    }}>
+      {/* Background image */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        backgroundImage: `url(${heroBg2})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center 20%',
+      }} />
+
+      {/* Stronger vignette for the busy photo */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 25%, rgba(5,20,10,0.55) 55%, rgba(5,20,10,0.93) 100%)',
+      }} />
+
+      {/* Spacer */}
+      <div style={{ flex: 1 }} />
+
+      {/* Title — left-aligned, editorial feel */}
+      <div style={{ padding: '0 24px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
+        <Eyebrow color="#fff" style={{ marginBottom: 12 }}>
+          Four questions · Two minutes
+        </Eyebrow>
+        <Display style={{ fontSize: 36, color: '#fff', textAlign: 'left', lineHeight: 0.95 }}>
+          Think you're{' '}
+          <span style={{ color: '#2aa892' }}>SMART</span>{' '}
+          about gun safety?
+        </Display>
+        {/* Decorative rule */}
+        <div style={{
+          width: 40, height: 3, background: P.rust,
+          borderRadius: 2, marginTop: 20,
+        }} />
+      </div>
+
+      {/* CTA */}
       <div style={{ padding: '20px 24px 28px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
         <button onClick={onStart}
           style={{
-            background: P.rust, color: '#fff', border: 'none',
+            background: 'transparent', color: '#fff',
+            border: '2px solid rgba(255,255,255,0.9)',
             borderRadius: 999, padding: '16px 24px', width: '100%',
             fontFamily: '"Archivo", sans-serif', fontSize: 16, fontWeight: 700,
             letterSpacing: '-0.005em', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            boxShadow: '0 2px 0 rgba(0,0,0,0.2)',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
           }}>
           <span>Take the quiz</span>
-          <span style={{ fontSize: 20, lineHeight: 1 }}>→</span>
+          <span style={{
+            width: 32, height: 32, borderRadius: '50%',
+            background: P.rust, display: 'flex', alignItems: 'center',
+            justifyContent: 'center', fontSize: 16, lineHeight: 1,
+          }}>→</span>
         </button>
         <div style={{ marginTop: 12, textAlign: 'center' }}>
-          <Eyebrow color="rgba(255,255,255,0.55)">No login · No data kept</Eyebrow>
+          <Eyebrow color="#fff">No login · No data kept</Eyebrow>
         </div>
       </div>
+      {/* About link */}
+      <div style={{
+        flexShrink: 0, textAlign: 'center', paddingBottom: 16,
+        position: 'relative', zIndex: 1,
+      }}>
+        <button onClick={onAbout}
+          style={{
+            background: 'none', border: 'none', cursor: 'pointer',
+            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+            fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
+            textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)',
+            textDecoration: 'underline', textUnderlineOffset: 3,
+          }}>
+          About this quiz
+        </button>
+      </div>
+
     </div>
   );
 }
@@ -299,6 +394,23 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
               <Body style={{ marginTop: 8, fontSize: 14, lineHeight: 1.5 }}>
                 {picked.feedback}
               </Body>
+              {picked.source && (
+                <div style={{
+                  marginTop: 8,
+                  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                  fontSize: 10, color: P.muted, lineHeight: 1.4,
+                }}>
+                  *{' '}
+                  <a
+                    href={picked.source.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: P.muted, textDecoration: 'underline', textUnderlineOffset: 2 }}
+                  >
+                    {picked.source.label}
+                  </a>
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -1221,6 +1333,82 @@ function ResultsScreen({ score, total, onRetake }) {
   return createPortal(jsx, document.body);
 }
 
+// ─── About screen ──────────────────────────────────────────────────────
+function AboutScreen({ onBack }) {
+  return (
+    <div style={{
+      height: '100%', overflowY: 'auto', boxSizing: 'border-box',
+      padding: '48px 28px 40px',
+      background: P.cream,
+      display: 'flex', flexDirection: 'column',
+    }}>
+      <button onClick={onBack} style={{
+        background: 'none', border: 'none', cursor: 'pointer',
+        fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+        fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
+        textTransform: 'uppercase', color: P.muted,
+        padding: 0, marginBottom: 32, alignSelf: 'flex-start',
+        display: 'flex', alignItems: 'center', gap: 6,
+      }}>← Back</button>
+
+      <Eyebrow color={P.rust} style={{ marginBottom: 12 }}>About this quiz</Eyebrow>
+      <h2 style={{
+        fontFamily: '"Archivo", system-ui, sans-serif',
+        fontWeight: 900, fontSize: 28, lineHeight: 1.05,
+        letterSpacing: '-0.02em', color: P.ink, margin: '0 0 24px',
+      }}>
+        Made by local Be <span style={{ color: P.forest }}>SMART</span> chapters
+      </h2>
+
+      <Body style={{ marginBottom: 16 }}>
+        This quiz was created by local chapters of the{' '}
+        <strong>Be SMART</strong> organization active in the{' '}
+        <strong>Upper Valley, New Hampshire</strong>.
+      </Body>
+      <Body style={{ marginBottom: 16 }}>
+        Be SMART is a program that empowers parents and adults to take
+        responsible action to prevent gun violence by promoting the safe
+        storage of firearms. SMART stands for:
+      </Body>
+
+      {[
+        ['S', 'Secure', 'Secure all guns in your home and vehicles.'],
+        ['M', 'Model', 'Model responsible behavior around firearms.'],
+        ['A', 'Ask', 'Ask about unsecured guns in other homes.'],
+        ['R', 'Recognize', 'Recognize the risks of teen suicide and unintentional shootings.'],
+        ['T', 'Tell', 'Tell your peers to be SMART.'],
+      ].map(([letter, word, desc]) => (
+        <div key={letter} style={{
+          display: 'flex', gap: 14, marginBottom: 14, alignItems: 'flex-start',
+        }}>
+          <div style={{
+            width: 32, height: 32, borderRadius: 6, flexShrink: 0,
+            background: P.forest, color: '#fff',
+            fontFamily: '"Archivo", sans-serif', fontWeight: 900, fontSize: 16,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>{letter}</div>
+          <div>
+            <div style={{
+              fontFamily: '"Archivo", sans-serif', fontWeight: 700,
+              fontSize: 14, color: P.ink, marginBottom: 2,
+            }}>{word}</div>
+            <Body style={{ fontSize: 14, color: P.muted }}>{desc}</Body>
+          </div>
+        </div>
+      ))}
+
+      <HairLine style={{ margin: '24px 0' }} />
+      <Body style={{ fontSize: 14, color: P.muted }}>
+        Learn more at{' '}
+        <a href="https://besmartforkids.org" target="_blank" rel="noopener noreferrer"
+          style={{ color: P.forest, fontWeight: 600 }}>
+          besmartforkids.org
+        </a>
+      </Body>
+    </div>
+  );
+}
+
 // ─── App root ──────────────────────────────────────────────────────────
 export default function App() {
   const [deck, setDeck] = useState(() => buildDeck());
@@ -1261,11 +1449,19 @@ export default function App() {
     setTransitionKey(k => k + 1);
   }
 
+  const variant = new URLSearchParams(window.location.search).get('v') === 'photo'
+    ? 'photo'
+    : 'illustrated';
+
   let content;
-  if (screen === 'welcome') {
+  if (screen === 'about') {
+    content = <AboutScreen onBack={() => { setScreen('welcome'); setTransitionKey(k => k + 1); }} />;
+  } else if (screen === 'welcome') {
     content = (
       <WelcomeScreen
         onStart={() => { setScreen('question'); setTransitionKey(k => k + 1); }}
+        onAbout={() => { setScreen('about'); setTransitionKey(k => k + 1); }}
+        variant={variant}
       />
     );
   } else if (screen === 'question') {
