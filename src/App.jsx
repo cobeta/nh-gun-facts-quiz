@@ -23,9 +23,9 @@ const P = {
 function Eyebrow({ children, color = P.rust, style }) {
   return (
     <div style={{
-      fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-      fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
-      textTransform: 'uppercase', color, ...style,
+      fontFamily: '"Archivo", system-ui, sans-serif',
+      fontSize: 12, fontWeight: 600,
+      color, ...style,
     }}>{children}</div>
   );
 }
@@ -34,7 +34,7 @@ function Display({ children, style }) {
   return (
     <h1 style={{
       fontFamily: '"Archivo", system-ui, sans-serif',
-      fontWeight: 900, fontStretch: '125%',
+      fontWeight: 900,
       letterSpacing: '-0.025em', lineHeight: 0.95,
       color: P.ink, margin: 0, textWrap: 'balance',
       ...style,
@@ -125,7 +125,6 @@ function WelcomeIllustrated({ onStart, onAbout }) {
         </Eyebrow>
         <Display style={{
           fontSize: 42, color: '#fff', textAlign: 'center',
-          fontStretch: '100%',
         }}>
           Think you're{' '}
           <span style={{ color: P.forest }}>SMART</span>{' '}
@@ -158,9 +157,8 @@ function WelcomeIllustrated({ onStart, onAbout }) {
         <button onClick={onAbout}
           style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-            fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)',
+            fontFamily: '"Archivo", system-ui, sans-serif',
+            fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.65)',
             textDecoration: 'underline', textUnderlineOffset: 3,
           }}>
           About this quiz
@@ -243,9 +241,8 @@ function WelcomePhoto({ onStart, onAbout }) {
         <button onClick={onAbout}
           style={{
             background: 'none', border: 'none', cursor: 'pointer',
-            fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-            fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
-            textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)',
+            fontFamily: '"Archivo", system-ui, sans-serif',
+            fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.65)',
             textDecoration: 'underline', textUnderlineOffset: 3,
           }}>
           About this quiz
@@ -358,7 +355,13 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
       <ProgressBar current={index} total={total} />
 
       <div style={{ marginTop: 24, flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <Display style={{ fontSize: 26, lineHeight: 1.1, fontStretch: '100%' }}>
+        <Display style={{ fontSize: 26, lineHeight: 1.1 }}>
+          {question.promptIntro && (
+            <>
+              <span style={{ fontWeight: 400, opacity: 0.55, fontSize: 20 }}>{question.promptIntro}</span>
+              <br /><br />
+            </>
+          )}
           {question.prompt}
         </Display>
 
@@ -392,23 +395,33 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
                 {picked.correct ? 'Correct' : 'Here are the facts'}
               </Eyebrow>
               <Body style={{ marginTop: 8, fontSize: 14, lineHeight: 1.5 }}>
-                {picked.feedback}
+                {Array.isArray(picked.feedback)
+                  ? picked.feedback.map((seg, i) =>
+                      seg.bold ? <strong key={i}>{seg.text}</strong> : <span key={i}>{seg.text}</span>
+                    )
+                  : picked.feedback}
               </Body>
               {picked.source && (
                 <div style={{
                   marginTop: 8,
-                  fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-                  fontSize: 10, color: P.muted, lineHeight: 1.4,
+                  fontFamily: '"Archivo", system-ui, sans-serif',
+                  fontSize: 11, color: P.muted, lineHeight: 1.4,
                 }}>
-                  *{' '}
-                  <a
-                    href={picked.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ color: P.muted, textDecoration: 'underline', textUnderlineOffset: 2 }}
-                  >
-                    {picked.source.label}
-                  </a>
+                  {picked.source.url ? (
+                    <>
+                      *{' '}
+                      <a
+                        href={picked.source.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: P.muted, textDecoration: 'underline', textUnderlineOffset: 2 }}
+                      >
+                        {picked.source.label}
+                      </a>
+                    </>
+                  ) : (
+                    picked.source.label
+                  )}
                 </div>
               )}
             </div>
@@ -471,29 +484,27 @@ const resultStyles = `
   }
 
   .results-eyebrow {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
     color: ${P.rust};
     margin-bottom: 20px;
   }
 
   .results-score-row {
     display: flex;
-    align-items: flex-end;
-    gap: 24px;
+    align-items: center;
+    gap: 20px;
     margin-bottom: 24px;
   }
 
   .results-score-number {
-    font-size: clamp(80px, 18vw, 140px);
+    font-size: clamp(72px, 16vw, 120px);
     font-weight: 900;
-    font-stretch: 125%;
-    line-height: 0.85;
+    line-height: 1;
     letter-spacing: -0.05em;
     color: ${P.rust};
+    flex-shrink: 0;
   }
 
   .results-score-denom {
@@ -504,13 +515,11 @@ const resultStyles = `
 
   .results-tier {
     flex: 1;
-    padding-bottom: 4px;
   }
 
   .results-tier-heading {
     font-size: clamp(16px, 3vw, 22px);
     font-weight: 900;
-    font-stretch: 125%;
     line-height: 1.05;
     letter-spacing: -0.02em;
     color: ${P.ink};
@@ -525,65 +534,15 @@ const resultStyles = `
     max-width: 480px;
   }
 
-  .results-facts-section {
-    padding: 36px 24px 0;
-  }
-
   .results-section-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
     color: ${P.forest};
-    display: flex;
-    align-items: center;
-    gap: 8px;
     margin-bottom: 20px;
   }
 
-  .results-section-label::before {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    background: ${P.forest};
-    border-radius: 2px;
-    flex-shrink: 0;
-  }
 
-  .results-facts-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 1px;
-    background: rgba(26,26,26,0.1);
-    border: 1px solid rgba(26,26,26,0.1);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .results-fact-cell {
-    background: ${P.cream};
-    padding: 18px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .results-fact-stat {
-    font-size: clamp(20px, 4vw, 28px);
-    font-weight: 900;
-    font-stretch: 125%;
-    letter-spacing: -0.03em;
-    line-height: 1;
-  }
-
-  .results-fact-label {
-    font-size: clamp(11px, 1.4vw, 13px);
-    line-height: 1.35;
-    color: ${P.muted};
-    text-wrap: pretty;
-  }
 
   .results-verdict {
     margin: 32px 24px 0;
@@ -607,12 +566,10 @@ const resultStyles = `
   }
 
   .results-verdict-eyebrow {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.7);
     margin-bottom: 12px;
   }
 
@@ -624,7 +581,6 @@ const resultStyles = `
     font-family: "Archivo", system-ui, sans-serif;
     font-size: clamp(20px, 4.5vw, 28px);
     font-weight: 900;
-    font-stretch: 125%;
     letter-spacing: -0.025em;
     line-height: 1.1;
     color: #fff;
@@ -642,6 +598,49 @@ const resultStyles = `
   .results-verdict-text strong {
     color: #fff;
     font-weight: 700;
+  }
+
+  .results-convo-starters {
+    margin: 20px 24px 0;
+    padding: 24px;
+    background: ${P.forestTint};
+    border: 2px solid ${P.forest};
+    border-radius: 10px;
+    display: block;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 150ms ease, border-color 150ms ease;
+  }
+
+  .results-convo-starters:hover {
+    background: #d5e8df;
+    border-color: ${P.forestDeep};
+  }
+
+  .results-convo-eyebrow {
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: ${P.forest};
+    margin-bottom: 10px;
+  }
+
+  .results-convo-link {
+    display: block;
+    font-family: "Archivo", sans-serif;
+    font-size: clamp(22px, 5vw, 28px);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: ${P.forestDeep};
+    margin-bottom: 12px;
+  }
+
+  .results-convo-sub {
+    font-family: "Archivo", sans-serif;
+    font-size: 13px;
+    color: ${P.forest};
+    line-height: 1.5;
   }
 
   .results-actions {
@@ -695,11 +694,8 @@ const resultStyles = `
 
   .results-credit {
     padding: 12px 24px 28px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 9px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 11px;
     color: rgba(26,26,26,0.3);
     text-align: center;
   }
@@ -737,7 +733,6 @@ const resultStyles = `
     }
 
     .results-hero   { padding: 0; border-bottom: none; }
-    .results-facts-section { padding: 0; }
 
     /* Bottom row: verdict full width */
     .results-bottom-row {
@@ -756,16 +751,18 @@ const resultStyles = `
       justify-content: center;
     }
 
+    .results-convo-starters {
+      margin: 16px 0 0;
+    }
+
     .results-credit {
       padding: 12px 0 28px;
     }
 
     /* Desktop typography */
     .results-score-number  { font-size: 88px; }
-    .results-tier-heading  { font-size: 20px; font-stretch: 100%; }
+    .results-tier-heading  { font-size: 20px; }
     .results-tier-body     { font-size: 14px; }
-    .results-fact-stat     { font-size: 22px; font-stretch: 100%; }
-    .results-fact-label    { font-size: 12px; }
     .results-verdict-headline { font-size: 22px; margin-bottom: 10px; }
     .results-verdict-text  { font-size: 14px; }
     .results-verdict-eyebrow { margin-bottom: 8px; }
@@ -773,7 +770,6 @@ const resultStyles = `
     .results-score-row     { margin-bottom: 12px; }
     .results-eyebrow       { margin-bottom: 12px; }
     .results-section-label { margin-bottom: 12px; }
-    .results-fact-cell     { padding: 14px 16px; gap: 6px; }
 
     .results-besmart-section {
       padding: 24px 0 40px;
@@ -849,7 +845,6 @@ const beSmartStyles = `
     font-family: "Archivo", system-ui, sans-serif;
     font-size: clamp(28px, 7vw, 40px);
     font-weight: 900;
-    font-stretch: 125%;
     letter-spacing: -0.03em;
     line-height: 1;
     color: ${P.ink};
@@ -921,26 +916,11 @@ const beSmartStyles = `
   }
 
   .results-resources-label {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10px;
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
     color: ${P.forest};
-    display: flex;
-    align-items: center;
-    gap: 8px;
     margin-bottom: 12px;
-  }
-
-  .results-resources-label::before {
-    content: '';
-    display: block;
-    width: 8px;
-    height: 8px;
-    background: ${P.forest};
-    border-radius: 2px;
-    flex-shrink: 0;
   }
 
   .results-pdf-cards {
@@ -1011,7 +991,6 @@ const beSmartStyles = `
     font-family: "Archivo", sans-serif;
     font-size: 14px;
     font-weight: 800;
-    font-stretch: 125%;
     letter-spacing: -0.01em;
     color: #fff;
     margin-bottom: 4px;
@@ -1072,11 +1051,10 @@ function ResultsScreen({ score, total, onRetake }) {
   const [toast, setToast] = useState(null);
 
   const pct = Math.round((score / total) * 100);
-  const facts = BOTTOM_LINE.slice(0, 6);
   const verdict = BOTTOM_LINE[6];
 
   async function share() {
-    const msg = `I scored ${score}/${total} on the Safe Storage quiz. 75% of kids know where the gun is — even when parents think it's hidden. Try it yourself.`;
+    const msg = `I scored ${score}/${total} on the Safe Storage quiz. 75% of kids know where the gun is, even when parents think it's hidden. Try it yourself.`;
     try {
       if (navigator.share) {
         await navigator.share({ title: 'NH Gun Facts Quiz', text: msg });
@@ -1085,14 +1063,12 @@ function ResultsScreen({ score, total, onRetake }) {
     } catch { /* fall through */ }
     try {
       await navigator.clipboard.writeText(msg);
-      setToast('Copied — paste it anywhere');
+      setToast('Copied. Paste it anywhere.');
     } catch {
       setToast("Couldn't copy — try again");
     }
     setTimeout(() => setToast(null), 2200);
   }
-
-  const statColors = [P.rust, P.forest, P.rust, P.forest, P.rust, P.forest];
 
   const jsx = (
     <>
@@ -1103,29 +1079,15 @@ function ResultsScreen({ score, total, onRetake }) {
 
           <div className="results-top-row">
             <div className="results-hero">
-              <div className="results-eyebrow">Safe Storage · Your Results</div>
+              <div className="results-eyebrow">Your Results</div>
               <div className="results-score-row">
                 <div className="results-score-number">
                   {score}<span className="results-score-denom">/{total}</span>
                 </div>
-              </div>
-              <div className="results-tier">
-                <h2 className="results-tier-heading">{tier.heading}</h2>
-                <p className="results-tier-body">{tier.body}</p>
-              </div>
-            </div>
-
-            <div className="results-facts-section">
-              <div className="results-section-label">What the data says</div>
-              <div className="results-facts-grid">
-                {facts.map((item, i) => (
-                  <div className="results-fact-cell" key={i}>
-                    <div className="results-fact-stat" style={{ color: statColors[i] }}>
-                      {item.stat}
-                    </div>
-                    <div className="results-fact-label">{item.label}</div>
-                  </div>
-                ))}
+                <div className="results-tier">
+                  <h2 className="results-tier-heading">{tier.heading}</h2>
+                  <p className="results-tier-body">{tier.body}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1137,12 +1099,25 @@ function ResultsScreen({ score, total, onRetake }) {
                 Most gun-owning parents wouldn't mind being asked.
               </div>
               <div className="results-verdict-text">
-                Studies suggest the barrier isn't hostility —{' '}
-                <strong>it's that the question doesn't occur to people.</strong>{' '}
-                "Do you have guns at home, and how are they stored?" is a
-                normal safety question, like asking about a pool.
+                <strong>The barrier isn't hostility. It's that the question doesn't occur to people.</strong>
+              </div>
+              <div className="results-verdict-text" style={{ marginTop: 10 }}>
+                "Do you have guns at home, and how are they stored?" is a normal safety question, like asking about a pool or allergies.
               </div>
             </div>
+
+            <a
+              className="results-convo-starters"
+              href="https://besmartforkids.org/secure-gun-storage/resources/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="results-convo-eyebrow">Not sure how to bring it up?</div>
+              <div className="results-convo-link">Get conversation starters ↗</div>
+              <div className="results-convo-sub">
+                Be SMART has ready-to-use scripts for asking other parents about gun storage, so you don't have to figure out the words yourself.
+              </div>
+            </a>
           </div>
 
           <div className="results-besmart-section">
@@ -1163,38 +1138,6 @@ function ResultsScreen({ score, total, onRetake }) {
                 </div>
               ))}
             </div>
-
-            <a
-              href="https://besmartforkids.org/secure-gun-storage/resources/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: 'block', textDecoration: 'none',
-                background: P.forestTint, border: `1.5px solid ${P.forest}`,
-                borderRadius: 10, padding: '18px 20px', marginBottom: 20,
-              }}
-            >
-              <div style={{
-                fontFamily: '"JetBrains Mono", monospace', fontSize: 10,
-                fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
-                color: P.forest, marginBottom: 6,
-              }}>
-                Not sure how to bring it up?
-              </div>
-              <div style={{
-                fontFamily: '"Archivo", sans-serif', fontSize: 15.5,
-                fontWeight: 800, letterSpacing: '-0.02em', color: P.ink,
-                marginBottom: 4,
-              }}>
-                Get conversation starters ↗
-              </div>
-              <div style={{
-                fontFamily: '"Archivo", sans-serif', fontSize: 13,
-                color: P.muted, lineHeight: 1.4,
-              }}>
-                Be SMART has ready-to-use scripts for asking other parents about gun storage — so you don't have to figure out the words yourself.
-              </div>
-            </a>
 
             <div className="results-resources-block">
               <div className="results-resources-label">Useful resources</div>
@@ -1250,8 +1193,8 @@ function ResultsScreen({ score, total, onRetake }) {
             </div>
             <details style={{ marginTop: 20, borderTop: `1px solid ${P.hair}`, paddingTop: 16 }}>
               <summary style={{
-                fontFamily: '"JetBrains Mono", monospace', fontSize: 10,
-                fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
+                fontFamily: '"Archivo", system-ui, sans-serif', fontSize: 12,
+                fontWeight: 600,
                 color: P.muted, cursor: 'pointer', listStyle: 'none',
                 display: 'flex', alignItems: 'center', gap: 8,
                 userSelect: 'none',
@@ -1264,27 +1207,27 @@ function ResultsScreen({ score, total, onRetake }) {
               <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {[
                   {
-                    label: 'Q1 — Safe storage rates (35% locked and unloaded)',
+                    label: 'Q1: Safe storage rates (35% locked and unloaded)',
                     cite: 'Miller et al., JAMA Network Open, 2026',
                     url: 'https://jamanetwork.com/journals/jamanetworkopen',
                   },
                   {
-                    label: 'Q1 — NH gun ownership rate (~41% of adults)',
+                    label: 'Q1: NH gun ownership rate (~41% of adults)',
                     cite: 'CBS News / state gun ownership survey',
                     url: 'https://www.cbsnews.com/pictures/gun-ownership-rates-by-state/',
                   },
                   {
-                    label: 'Q2 — 75% of kids know where the gun is stored',
+                    label: 'Q2: 75% of kids know where the gun is stored',
                     cite: 'Baxley & Miller (2006), Pediatrics; via UConn ARMS Center (2024)',
                     url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/',
                   },
                   {
-                    label: 'Q3 — 60%+ of parents have never asked before a playdate',
+                    label: 'Q3: 60%+ of parents have never asked before a playdate',
                     cite: 'Garbutt et al., Pediatrics, 2024 (Lurie Children\'s Hospital)',
                     url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061',
                   },
                   {
-                    label: 'Q3 — ~20% of unintentional child gun deaths at a friend\'s home',
+                    label: 'Q3: ~20% of unintentional child gun deaths at a friend\'s home',
                     cite: 'Seattle Children\'s Hospital',
                     url: 'https://www.seattlechildrens.org/healthy-tides/guns-stored-safely/',
                   },
@@ -1344,9 +1287,8 @@ function AboutScreen({ onBack }) {
     }}>
       <button onClick={onBack} style={{
         background: 'none', border: 'none', cursor: 'pointer',
-        fontFamily: '"JetBrains Mono", ui-monospace, monospace',
-        fontSize: 10, fontWeight: 600, letterSpacing: '0.14em',
-        textTransform: 'uppercase', color: P.muted,
+        fontFamily: '"Archivo", system-ui, sans-serif',
+        fontSize: 12, fontWeight: 600, color: P.muted,
         padding: 0, marginBottom: 32, alignSelf: 'flex-start',
         display: 'flex', alignItems: 'center', gap: 6,
       }}>← Back</button>
@@ -1449,9 +1391,9 @@ export default function App() {
     setTransitionKey(k => k + 1);
   }
 
-  const variant = new URLSearchParams(window.location.search).get('v') === 'photo'
-    ? 'photo'
-    : 'illustrated';
+  const variant = new URLSearchParams(window.location.search).get('v') === 'illustrated'
+    ? 'illustrated'
+    : 'photo';
 
   let content;
   if (screen === 'about') {

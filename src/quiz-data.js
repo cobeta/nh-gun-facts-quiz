@@ -1,121 +1,140 @@
 export const QUESTIONS = [
   {
     id: 'q1',
-    prompt: "About 1 in 3 American homes with children have a gun. Of those, what percentage store it both locked and unloaded — the way experts recommend?",
+    prompt: "About 1 in 3 American homes with children have a gun. Of those, what percentage store it locked and unloaded, the way experts recommend?",
     answers: [
       {
         text: 'About 75%',
         correct: false,
-        feedback: "Only about 35% of gun-owning households with kids store firearms both locked and unloaded. In NH, where about 41% of adults live in homes with firearms, that gap represents a lot of kids.",
-        source: { label: 'Miller et al., JAMA Network Open, 2026', url: 'https://jamanetwork.com/journals/jamanetworkopen' },
+        feedback: "Only 44% of gun-owning households with kids follow the safest storage practices. In NH, where about 41% of adults live in homes with firearms, that gap represents a lot of kids.",
+        source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
       {
         text: 'About 55%',
         correct: false,
-        feedback: "Higher than you'd expect, but still lower. About 35% store guns both locked and unloaded — the rest use only one precaution, or neither.",
-        source: { label: 'Miller et al., JAMA Network Open, 2026', url: 'https://jamanetwork.com/journals/jamanetworkopen' },
+        feedback: "Close, but lower. Only 44% store all guns locked and unloaded. The majority of gun-owning homes with kids don't follow the safest practices.",
+        source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
       {
-        text: 'About 35%',
+        text: 'About 44%',
         correct: true,
-        feedback: "Correct — and it surprises most people. Only about 35% of gun-owning parents store firearms both locked and unloaded. Another 21% store them unlocked and loaded. In NH, where about 41% of adults live in homes with guns, that math adds up fast.",
-        source: { label: 'Miller et al., JAMA Network Open, 2026', url: 'https://jamanetwork.com/journals/jamanetworkopen' },
+        feedback: "Correct, and it surprises most people. Only 44% of gun-owning households with children store firearms locked and unloaded. The majority don't. In NH, where about 41% of adults live in homes with guns, that math adds up fast.",
+        source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
       {
         text: 'Almost all of them',
         correct: false,
-        feedback: "Far from it. Only about 35% of gun-owning households with kids store all guns both locked and unloaded. About 1 in 5 store them unlocked and loaded.",
-        source: { label: 'Miller et al., JAMA Network Open, 2026', url: 'https://jamanetwork.com/journals/jamanetworkopen' },
+        feedback: "Far from it. Only 44% of gun-owning households with kids store all guns locked and unloaded. Most don't follow the safest storage practices.",
+        source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
     ]
   },
   {
     id: 'q2',
-    prompt: "A parent says 'don't worry, the gun is hidden.' Researchers asked kids ages 5–14 whose parents said the same thing. What did they find?",
+    prompt: "A parent says: 'My child has no idea where the gun is.' According to researchers who then asked the children separately, how often was the parent wrong?",
     answers: [
       {
-        text: "Kids had no idea where it was",
+        text: "Almost never",
         correct: false,
-        feedback: "Actually, 75% of kids in gun-owning homes know where the gun is stored — even when parents think it's hidden. And 22% of parents didn't know their child had already handled it.",
-        source: { label: 'Baxley & Miller (2006), Pediatrics', url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/' },
+        feedback: "Parents were wrong far more often than they thought. 39% of parents who believed their child didn't know where the gun was stored were contradicted by their own child.",
+        source: { label: 'Baxley & Miller (2006), Arch Pediatr Adolesc Med', url: 'https://pubmed.ncbi.nlm.nih.gov/16651499/' },
       },
       {
-        text: "About 1 in 4 kids knew",
+        text: "About 25% of the time",
         correct: false,
-        feedback: "Much higher than that. 75% of kids know where the gun is, even when parents think it's out of reach. Nearly a quarter of parents didn't know their child had already handled it.",
-        source: { label: 'Baxley & Miller (2006), Pediatrics', url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/' },
+        feedback: "Even more often than that. 39% of parents who thought their child didn't know where the gun was were contradicted by their own child. Kids under 10 were just as likely to know as teenagers.",
+        source: { label: 'Baxley & Miller (2006), Arch Pediatr Adolesc Med', url: 'https://pubmed.ncbi.nlm.nih.gov/16651499/' },
       },
       {
-        text: "About half knew",
-        correct: false,
-        feedback: "Even higher. Researchers found that 75% of kids in gun-owning homes know where the gun is stored. And 22% of parents didn't know their child had already handled it.",
-        source: { label: 'Baxley & Miller (2006), Pediatrics', url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/' },
-      },
-      {
-        text: "About 3 in 4 kids knew",
+        text: "About 40% of the time",
         correct: true,
-        feedback: "Correct. 75% of kids in gun-owning homes know where the gun is — even when parents believe it's safely hidden. And 22% of parents were unaware that their child had already handled it. Kids are better at finding things than we think.",
-        source: { label: 'Baxley & Miller (2006), Pediatrics', url: 'https://today.uconn.edu/2024/03/storing-firearms-at-home-what-uconn-experts-say/' },
+        feedback: "Correct. 39% of parents who believed their child didn't know where the gun was stored were contradicted by their own child. The gun wasn't hidden as well as they thought, and kids under 10 were just as likely to know as teenagers.",
+        source: { label: 'Baxley & Miller (2006), Arch Pediatr Adolesc Med', url: 'https://pubmed.ncbi.nlm.nih.gov/16651499/' },
       },
     ]
   },
   {
     id: 'q3',
-    prompt: "Before a playdate, parents ask about allergies, pets, and supervision. How many ask 'is there an unlocked gun in your home?'",
+    promptIntro: "A study asked both gun-owning and non-gun-owning parents whether it's appropriate to ask about unlocked firearms before letting their child visit another home.",
+    prompt: "What percentage said it was okay to ask?",
     answers: [
       {
-        text: "Most parents ask",
+        text: "About 15%",
         correct: false,
-        feedback: "The opposite is true. More than 60% of parents have never asked. Nearly 20% of unintentional firearm deaths in children happen at a friend's home — not their own.",
-        source: { label: 'Garbutt et al., Pediatrics, 2024', url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061' },
+        feedback: "Far more than that. 85% said it's appropriate, and gun-owning parents agreed at nearly the same rate (84%). But only about 30% of parents ever actually have the conversation.",
+        source: { label: 'Simonetti et al. (2025), J Pediatrics & Child Health; Haasz et al. (2025), Pediatrics', url: 'https://doi.org/10.1016/j.jpedcp.2025.200174' },
       },
       {
-        text: "About half ask",
+        text: "About 40%",
         correct: false,
-        feedback: "Far fewer. More than 60% of parents have never asked about guns before a playdate. Most said it simply never occurred to them.",
-        source: { label: 'Garbutt et al., Pediatrics, 2024', url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061' },
+        feedback: "Much higher. 85% of parents, including 84% of gun owners, said asking is appropriate. The real surprise: only about 30% ever actually do it.",
+        source: { label: 'Simonetti et al. (2025), J Pediatrics & Child Health; Haasz et al. (2025), Pediatrics', url: 'https://doi.org/10.1016/j.jpedcp.2025.200174' },
       },
       {
-        text: "About 2 in 3 ask",
+        text: "About 60%",
         correct: false,
-        feedback: "Actually far fewer. More than 60% have never asked — meaning fewer than 4 in 10 ever have. Most parents say it just didn't occur to them.",
-        source: { label: 'Garbutt et al., Pediatrics, 2024', url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061' },
+        feedback: "Even higher. 85% said it's appropriate, and gun-owning parents agreed at nearly the same rate (84%). Yet only about 30% of parents report ever asking.",
+        source: { label: 'Simonetti et al. (2025), J Pediatrics & Child Health; Haasz et al. (2025), Pediatrics', url: 'https://doi.org/10.1016/j.jpedcp.2025.200174' },
       },
       {
-        text: "Fewer than 4 in 10",
+        text: "About 85%",
         correct: true,
-        feedback: "Correct. More than 60% of parents have never asked. Nearly 20% of unintentional firearm deaths in children happen at a friend's home. Most parents say it simply never occurred to them to ask.",
-        source: { label: 'Garbutt et al., Pediatrics, 2024', url: 'https://publications.aap.org/pediatrics/article-abstract/154/6/e2024068061' },
+        feedback: "Correct. 85% said it's appropriate, and gun-owning parents agreed at nearly the same rate (84%). But another study found only about 30% of parents ever actually have the conversation.",
+        source: { label: 'Simonetti et al. (2025), J Pediatrics & Child Health; Haasz et al. (2025), Pediatrics', url: 'https://doi.org/10.1016/j.jpedcp.2025.200174' },
       },
     ]
   },
   {
     id: 'q4',
-    prompt: "You or a family member have a gun you no longer want. What's the safest way to get rid of it?",
+    prompt: "You inherit or find a gun you don't want in your home. What's the safest way to get rid of it?",
     answers: [
       {
-        text: 'Leave it at a gun shop',
+        text: 'Drop it in a metal recycling bin',
         correct: false,
-        feedback: "Gun shops aren't required to accept unwanted firearms. The safest and easiest option is to call your local police non-emergency line — they can arrange a no-questions-asked surrender.",
-        source: { label: 'NH Dept. of Safety', url: 'https://www.nh.gov/safety/divisions/nhsp/' },
+        feedback: [
+          { bold: false, text: "The safest option is to talk to the local police. Two things to know: " },
+          { bold: true, text: "call the non-emergency line" },
+          { bold: false, text: " to arrange it first, and " },
+          { bold: true, text: "don't just walk in carrying a firearm." },
+          { bold: false, text: " They'll take it for destruction or point you to the nearest agency that will." },
+        ],
+        source: { label: '* As verified with local police departments in the area.' },
       },
       {
-        text: 'Give it to a friend or neighbor',
+        text: 'Throw it out with the trash',
         correct: false,
-        feedback: "Transferring a gun informally can create legal risk and puts the new owner in an unvetted situation. The safest option is calling your local police non-emergency line for a safe surrender.",
-        source: { label: 'NH Dept. of Safety', url: 'https://www.nh.gov/safety/divisions/nhsp/' },
+        feedback: [
+          { bold: false, text: "The safest option is to talk to the local police. Two things to know: " },
+          { bold: true, text: "call the non-emergency line" },
+          { bold: false, text: " to arrange it first, and " },
+          { bold: true, text: "don't just walk in carrying a firearm." },
+          { bold: false, text: " They'll take it for destruction or point you to the nearest agency that will." },
+        ],
+        source: { label: '* As verified with local police departments in the area.' },
       },
       {
-        text: 'Call the police non-emergency line',
+        text: "Talk to the local police",
         correct: true,
-        feedback: "Correct. NH police departments accept unwanted firearms through their non-emergency line — no questions asked. It's the safest, easiest, and completely legal way to get rid of a gun you no longer want.",
-        source: { label: 'NH Dept. of Safety', url: 'https://www.nh.gov/safety/divisions/nhsp/' },
+        feedback: [
+          { bold: false, text: "Correct. Two things to know: " },
+          { bold: true, text: "call the non-emergency line" },
+          { bold: false, text: " to arrange it first, and " },
+          { bold: true, text: "don't just walk in carrying a firearm." },
+          { bold: false, text: " They'll take it for destruction or point you to the nearest agency that will." },
+        ],
+        source: { label: '* As verified with local police departments in the area.' },
       },
       {
-        text: 'Disassemble it and throw it away',
+        text: 'Bury it somewhere safe',
         correct: false,
-        feedback: "Disposing of a firearm in the trash is unsafe and may be illegal. The right call — literally — is your local police non-emergency line. They accept unwanted guns, no questions asked.",
-        source: { label: 'NH Dept. of Safety', url: 'https://www.nh.gov/safety/divisions/nhsp/' },
+        feedback: [
+          { bold: false, text: "The safest option is to talk to the local police. Two things to know: " },
+          { bold: true, text: "call the non-emergency line" },
+          { bold: false, text: " to arrange it first, and " },
+          { bold: true, text: "don't just walk in carrying a firearm." },
+          { bold: false, text: " They'll take it for destruction or point you to the nearest agency that will." },
+        ],
+        source: { label: '* As verified with local police departments in the area.' },
       },
     ]
   },
@@ -123,13 +142,13 @@ export const QUESTIONS = [
 
 export const BOTTOM_LINE = [
   { stat: '1 in 3', label: 'US homes with children have at least one gun' },
-  { stat: '35%', label: 'of gun-owning parents store firearms both locked and unloaded' },
-  { stat: '75%', label: 'of kids in gun-owning homes know where the gun is stored' },
+  { stat: '44%', label: 'of gun-owning households with children store all guns locked and unloaded' },
+  { stat: '76%', label: 'of kids in gun-owning homes know where the gun is stored' },
   { stat: '4.6M', label: 'children in the US live with a loaded, unlocked gun' },
   { stat: '~20%', label: "of unintentional child gun deaths happen at a friend's home" },
   { stat: '8/day', label: 'children in the US are unintentionally injured or killed by improperly stored guns' },
   // Index [6] is the verdict stat — used in the dark green "verdict" block
-  { stat: 'Most', label: 'gun-owning parents say they would not mind being asked about storage before a playdate' },
+  { stat: '85%', label: 'of parents, including gun owners, say it\'s appropriate to ask about firearms before a playdate' },
 ];
 
 export const TIERS = [
@@ -141,17 +160,17 @@ export const TIERS = [
   {
     min: 3,
     heading: 'Mostly there.',
-    body: "A couple of these facts catch most people off guard — especially the one about kids knowing where guns are hidden."
+    body: "A couple of these facts catch most people off guard, especially the one about kids knowing where guns are hidden."
   },
   {
     min: 1,
     heading: 'Some surprises in there.',
-    body: "You're not alone — most parents have never thought through these numbers. That's exactly why this quiz exists."
+    body: "You're not alone. Most parents have never thought through these numbers. That's exactly why this quiz exists."
   },
   {
     min: 0,
     heading: 'Eye-opening, right?',
-    body: "Don't feel bad. These facts are buried. Now you know them — and so can the people you share this with."
+    body: "Don't feel bad. These facts are buried. Now you know them, and so can the people you share this with."
   },
 ];
 
