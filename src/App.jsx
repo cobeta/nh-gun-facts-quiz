@@ -1063,7 +1063,7 @@ function ResultsScreen({ score, total, onRetake }) {
     const msg = `I scored ${score}/${total} on the Safe Storage quiz. 75% of kids know where the gun is, even when parents think it's hidden. Try it yourself.`;
     try {
       if (navigator.share) {
-        await navigator.share({ title: 'NH Gun Facts Quiz', text: msg });
+        await navigator.share({ title: 'NH Gun Facts Quiz', url: window.location.href });
         return;
       }
     } catch { /* fall through */ }
