@@ -453,11 +453,11 @@ function QuestionScreen({ question, index, total, selectedIdx, revealed, onPick,
 
 // ─── Results screen ────────────────────────────────────────────────────
 const SMART_ITEMS = [
-  { letter: 'S', word: 'Secure',    desc: 'Secure all guns in your home and vehicles.' },
-  { letter: 'M', word: 'Model',     desc: 'Model responsible behavior around firearms.' },
-  { letter: 'A', word: 'Ask',       desc: 'Ask about unsecured guns in homes your children visit.' },
-  { letter: 'R', word: 'Recognize', desc: 'Recognize the risks of teen suicide and depression.' },
-  { letter: 'T', word: 'Tell',      desc: 'Tell your peers to be SMART.' },
+  { letter: 'S', word: 'Secure',    desc: 'all guns in your home and vehicles.' },
+  { letter: 'M', word: 'Model',     desc: 'responsible behavior around firearms.' },
+  { letter: 'A', word: 'Ask',       desc: 'about unsecured guns in homes your children visit.' },
+  { letter: 'R', word: 'Recognize', desc: 'the risks of teen suicide and depression.' },
+  { letter: 'T', word: 'Tell',      desc: 'your peers to be SMART.' },
 ];
 
 const FEATURED_PDFS = [
@@ -609,12 +609,14 @@ const resultStyles = `
     display: block;
     text-decoration: none;
     cursor: pointer;
-    transition: background 150ms ease, border-color 150ms ease;
+    transition: background 150ms ease, border-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
   }
 
   .results-convo-starters:hover {
-    background: #d5e8df;
+    background: #c8e2d6;
     border-color: ${P.forestDeep};
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(30,100,70,0.15);
   }
 
   .results-convo-eyebrow {
@@ -792,8 +794,7 @@ const resultStyles = `
       min-width: 40px;
     }
 
-    .results-smart-word { font-size: 15px; }
-    .results-smart-desc { font-size: 13px; }
+    .results-smart-word { font-size: 14px; }
 
     .results-resources-block { margin-bottom: 14px; }
 
@@ -882,9 +883,10 @@ const beSmartStyles = `
   }
 
   .results-smart-letter {
-    font-family: "JetBrains Mono", monospace;
+    font-family: "Archivo", system-ui, sans-serif;
     font-size: clamp(24px, 5vw, 32px);
-    font-weight: 700;
+    font-weight: 900;
+    letter-spacing: -0.03em;
     color: ${P.forest};
     min-width: 40px;
     line-height: 1;
@@ -898,17 +900,15 @@ const beSmartStyles = `
 
   .results-smart-word {
     font-family: "Archivo", sans-serif;
-    font-size: clamp(14px, 2.5vw, 16px);
-    font-weight: 700;
+    font-size: clamp(13px, 2vw, 15px);
+    font-weight: 500;
     color: ${P.ink};
-    letter-spacing: -0.01em;
+    line-height: 1.4;
   }
 
-  .results-smart-desc {
-    font-family: "Archivo", sans-serif;
-    font-size: clamp(12px, 1.8vw, 13.5px);
-    color: ${P.muted};
-    line-height: 1.4;
+  .results-smart-word strong {
+    font-weight: 800;
+    color: ${P.ink};
   }
 
   .results-resources-block {
@@ -973,6 +973,12 @@ const beSmartStyles = `
     margin-bottom: 0;
     position: relative;
     overflow: hidden;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+  }
+
+  .results-besmart-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(20,70,50,0.25);
   }
 
   .results-besmart-cta::before {
@@ -1062,8 +1068,8 @@ function ResultsScreen({ score, total, onRetake }) {
       }
     } catch { /* fall through */ }
     try {
-      await navigator.clipboard.writeText(msg);
-      setToast('Copied. Paste it anywhere.');
+      await navigator.clipboard.writeText(window.location.href);
+      setToast('Link copied to clipboard!');
     } catch {
       setToast("Couldn't copy — try again");
     }
@@ -1122,18 +1128,14 @@ function ResultsScreen({ score, total, onRetake }) {
 
           <div className="results-besmart-section">
             <div className="results-besmart-intro">
-              <div className="results-section-label">What you can do</div>
-              <h2 className="results-besmart-heading">
-                Be <span className="results-besmart-highlight">SMART</span>.
-              </h2>
+              <h2 className="results-besmart-heading">Be</h2>
             </div>
             <div className="results-smart-list">
               {SMART_ITEMS.map(({ letter, word, desc }) => (
                 <div className="results-smart-row" key={letter}>
                   <div className="results-smart-letter">{letter}</div>
                   <div className="results-smart-content">
-                    <div className="results-smart-word">{word}</div>
-                    <div className="results-smart-desc">{desc}</div>
+                    <div className="results-smart-word"><strong>{word}</strong> {desc}</div>
                   </div>
                 </div>
               ))}
