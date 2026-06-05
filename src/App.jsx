@@ -84,98 +84,13 @@ function NHStamp({ color = '#fff' }) {
 }
 
 // ─── Welcome ───────────────────────────────────────────────────────────
-function WelcomeScreen({ onStart, onAbout, variant = 'illustrated' }) {
-  if (variant === 'photo') {
-    return <WelcomePhoto onStart={onStart} onAbout={onAbout} />;
-  }
-  return <WelcomeIllustrated onStart={onStart} onAbout={onAbout} />;
-}
-
-// Illustrated variant — clean image hero, title + CTA bottom-anchored
-function WelcomeIllustrated({ onStart, onAbout }) {
+function WelcomeScreen({ onStart, onAbout }) {
   return (
     <div style={{
       height: '100%', position: 'relative', overflow: 'hidden',
       display: 'flex', flexDirection: 'column', boxSizing: 'border-box',
     }}>
-      {/* Background image */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        backgroundImage: `url(${heroBg1})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center top',
-      }} />
-
-      {/* Gradient overlay — light at top, darkens toward bottom */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: 'none',
-      }} />
-
-      {/* Title + CTA — anchored at 1/3 from top */}
-      <div style={{
-        position: 'absolute', top: '33%', left: 0, right: 0,
-        padding: '16px 24px', zIndex: 1,
-        backdropFilter: 'blur(8px)',
-        WebkitBackdropFilter: 'blur(8px)',
-        background: 'rgba(0,0,0,0.08)',
-      }}>
-        <Eyebrow color="#fff" style={{ marginBottom: 10, textAlign: 'center' }}>
-          Four questions · Two minutes
-        </Eyebrow>
-        <Display style={{
-          fontSize: 42, color: '#fff', textAlign: 'center',
-        }}>
-          Think you're{' '}
-          <span style={{ color: P.forest }}>SMART</span>{' '}
-          about gun safety?
-        </Display>
-        <div style={{ marginTop: 20 }}>
-          <button onClick={onStart}
-            style={{
-              background: P.rust, color: '#fff', border: 'none',
-              borderRadius: 999, padding: '16px 24px', width: '100%',
-              fontFamily: '"Archivo", sans-serif', fontSize: 16, fontWeight: 700,
-              letterSpacing: '-0.005em', cursor: 'pointer',
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              boxShadow: '0 4px 16px rgba(252,80,0,0.35)',
-            }}>
-            <span>Take the quiz</span>
-            <span style={{ fontSize: 20, lineHeight: 1 }}>→</span>
-          </button>
-          <div style={{ marginTop: 12, textAlign: 'center' }}>
-            <Eyebrow color="#fff">No login · No data kept</Eyebrow>
-          </div>
-        </div>
-      </div>
-
-      {/* About link — bottom */}
-      <div style={{
-        position: 'absolute', bottom: 16, left: 0, right: 0,
-        textAlign: 'center', zIndex: 1,
-      }}>
-        <button onClick={onAbout}
-          style={{
-            background: 'none', border: 'none', cursor: 'pointer',
-            fontFamily: '"Archivo", system-ui, sans-serif',
-            fontSize: 12, fontWeight: 500, color: 'rgba(255,255,255,0.65)',
-            textDecoration: 'underline', textUnderlineOffset: 3,
-          }}>
-          About this quiz
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// Photo variant — editorial layout, title left-aligned mid-screen, heavier vignette
-function WelcomePhoto({ onStart, onAbout }) {
-  return (
-    <div style={{
-      height: '100%', position: 'relative',
-      display: 'flex', flexDirection: 'column', boxSizing: 'border-box',
-    }}>
-      {/* Background image */}
+      {/* Background */}
       <div style={{
         position: 'absolute', inset: 0,
         backgroundImage: `url(${heroBg2})`,
@@ -183,34 +98,30 @@ function WelcomePhoto({ onStart, onAbout }) {
         backgroundPosition: 'center 20%',
       }} />
 
-      {/* Stronger vignette for the busy photo */}
+      {/* Vignette */}
       <div style={{
         position: 'absolute', inset: 0,
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 25%, rgba(5,20,10,0.55) 55%, rgba(5,20,10,0.93) 100%)',
       }} />
 
+      {/* Title — 10% from top */}
+      <div style={{ padding: '25% 24px 0', position: 'relative', zIndex: 1 }}>
+        <Eyebrow color="#fff" style={{ marginBottom: 12, textAlign: 'center', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
+          Four questions · Two minutes
+        </Eyebrow>
+        <Display style={{ fontSize: 48, color: '#fff', textAlign: 'center', lineHeight: 0.95, textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.9)' }}>
+          Think you're{' '}
+          <span style={{ color: '#2aa892', textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.9)' }}>SMART</span>{' '}
+          about gun safety?
+        </Display>
+        <div style={{ width: 40, height: 3, background: P.rust, borderRadius: 2, marginTop: 20, marginLeft: 'auto', marginRight: 'auto' }} />
+      </div>
+
       {/* Spacer */}
       <div style={{ flex: 1 }} />
 
-      {/* Title — left-aligned, editorial feel */}
-      <div style={{ padding: '0 24px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
-        <Eyebrow color="#fff" style={{ marginBottom: 12 }}>
-          Four questions · Two minutes
-        </Eyebrow>
-        <Display style={{ fontSize: 36, color: '#fff', textAlign: 'left', lineHeight: 0.95 }}>
-          Think you're{' '}
-          <span style={{ color: '#2aa892' }}>SMART</span>{' '}
-          about gun safety?
-        </Display>
-        {/* Decorative rule */}
-        <div style={{
-          width: 40, height: 3, background: P.rust,
-          borderRadius: 2, marginTop: 20,
-        }} />
-      </div>
-
-      {/* CTA */}
-      <div style={{ padding: '20px 24px 28px', flexShrink: 0, position: 'relative', zIndex: 1 }}>
+      {/* CTA — bottom */}
+      <div style={{ padding: '0 24px 12px', position: 'relative', zIndex: 1 }}>
         <button onClick={onStart}
           style={{
             background: 'transparent', color: '#fff',
@@ -233,11 +144,9 @@ function WelcomePhoto({ onStart, onAbout }) {
           <Eyebrow color="#fff">No login · No data kept</Eyebrow>
         </div>
       </div>
+
       {/* About link */}
-      <div style={{
-        flexShrink: 0, textAlign: 'center', paddingBottom: 16,
-        position: 'relative', zIndex: 1,
-      }}>
+      <div style={{ flexShrink: 0, textAlign: 'center', paddingBottom: 16, position: 'relative', zIndex: 1 }}>
         <button onClick={onAbout}
           style={{
             background: 'none', border: 'none', cursor: 'pointer',
@@ -248,7 +157,6 @@ function WelcomePhoto({ onStart, onAbout }) {
           About this quiz
         </button>
       </div>
-
     </div>
   );
 }
@@ -1393,10 +1301,6 @@ export default function App() {
     setTransitionKey(k => k + 1);
   }
 
-  const variant = new URLSearchParams(window.location.search).get('v') === 'illustrated'
-    ? 'illustrated'
-    : 'photo';
-
   let content;
   if (screen === 'about') {
     content = <AboutScreen onBack={() => { setScreen('welcome'); setTransitionKey(k => k + 1); }} />;
@@ -1405,7 +1309,6 @@ export default function App() {
       <WelcomeScreen
         onStart={() => { setScreen('question'); setTransitionKey(k => k + 1); }}
         onAbout={() => { setScreen('about'); setTransitionKey(k => k + 1); }}
-        variant={variant}
       />
     );
   } else if (screen === 'question') {
