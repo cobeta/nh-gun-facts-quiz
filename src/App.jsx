@@ -1131,19 +1131,19 @@ function ResultsScreen({ score, total, onRetake }) {
               <div className="results-besmart-cta-links">
                 <a
                   className="results-besmart-cta-primary"
+                  href="https://besmartuppervalley.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  besmartuppervalley.org ↗
+                </a>
+                <a
+                  className="results-besmart-cta-secondary"
                   href="https://besmartforkids.org"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   besmartforkids.org ↗
-                </a>
-                <a
-                  className="results-besmart-cta-secondary"
-                  href="https://besmartforkids.org/share/in-your-community"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Community resources ↗
                 </a>
               </div>
             </div>
@@ -1263,11 +1263,11 @@ function AboutScreen({ onBack }) {
         fontWeight: 900, fontSize: 28, lineHeight: 1.05,
         letterSpacing: '-0.02em', color: P.ink, margin: '0 0 24px',
       }}>
-        Made by local Be <span style={{ color: P.forest }}>SMART</span> chapters
+        Made by a local Be <span style={{ color: P.forest }}>SMART</span> chapter
       </h2>
 
       <Body style={{ marginBottom: 16 }}>
-        This quiz was created by local chapters of the{' '}
+        This quiz was created by a local chapter of the{' '}
         <strong>Be SMART</strong> organization active in the{' '}
         <strong>Upper Valley, New Hampshire</strong>.
       </Body>
