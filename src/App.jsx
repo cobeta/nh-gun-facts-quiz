@@ -174,8 +174,8 @@ function WelcomeScreen({ onStart, onAbout }) {
         <div style={{ width: 40, height: 3, background: P.rust, borderRadius: 2, marginTop: 20, marginLeft: 'auto', marginRight: 'auto' }} />
       </div>
 
-      <DraggableBadge src={securityBadge} initialX={-60} initialY={10} />
-      <DraggableBadge src={padlock} initialX={40} initialY={10} />
+      <DraggableBadge src={padlock} initialX={-155} initialY={80} />
+      <DraggableBadge src={securityBadge} initialX={-165} initialY={200} />
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
