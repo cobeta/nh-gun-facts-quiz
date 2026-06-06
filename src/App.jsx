@@ -3,6 +3,9 @@ import { createPortal } from 'react-dom';
 import { buildDeck, tierFor, BOTTOM_LINE } from './quiz-data.js';
 import heroBg1 from './assets/hero-bg-1.png';
 import heroBg2 from './assets/hero-bg-2.png';
+import heroBg3 from './assets/hero-bg-3.png';
+import securityBadge from './assets/securityBadge.png';
+import padlock from './assets/padlock.png';
 
 // ─── Palette ───────────────────────────────────────────────────────────
 const P = {
@@ -11,9 +14,9 @@ const P = {
   ink: '#181818',
   rust: '#FC5000',
   rustDeep: '#C85654',
-  forest: '#23B09B',
-  forestDeep: '#1A8A78',
-  forestTint: '#E6F7F4',
+  forest: '#00ACAD',
+  forestDeep: '#008A8B',
+  forestTint: '#E0F5F5',
   rustTint: '#FFF3EE',
   muted: '#6B6660',
   hair: 'rgba(26,26,26,0.12)',
@@ -83,6 +86,65 @@ function NHStamp({ color = '#fff' }) {
   );
 }
 
+// ─── Draggable badge ───────────────────────────────────────────────────
+function DraggableBadge({ src, initialX = -10, initialY = 0 }) {
+  const [pos, setPos] = useState({ x: initialX, y: initialY });
+  const drag = useRef(null);
+
+  function onMouseDown(e) {
+    e.preventDefault();
+    drag.current = { startX: e.clientX - pos.x, startY: e.clientY - pos.y };
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+  }
+
+  function onMouseMove(e) {
+    if (!drag.current) return;
+    setPos({ x: e.clientX - drag.current.startX, y: e.clientY - drag.current.startY });
+  }
+
+  function onMouseUp() {
+    drag.current = null;
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  }
+
+  function onTouchStart(e) {
+    const t = e.touches[0];
+    drag.current = { startX: t.clientX - pos.x, startY: t.clientY - pos.y };
+  }
+
+  function onTouchMove(e) {
+    if (!drag.current) return;
+    const t = e.touches[0];
+    setPos({ x: t.clientX - drag.current.startX, y: t.clientY - drag.current.startY });
+  }
+
+  return (
+    <img
+      src={src}
+      alt=""
+      draggable={false}
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      style={{
+        position: 'absolute',
+        left: `calc(50% + ${pos.x}px)`,
+        top: `calc(25% + ${pos.y}px)`,
+        width: 108,
+        height: 108,
+        objectFit: 'contain',
+        cursor: 'grab',
+        filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.35))',
+        userSelect: 'none',
+        zIndex: 2,
+        touchAction: 'none',
+      }}
+    />
+  );
+}
+
 // ─── Welcome ───────────────────────────────────────────────────────────
 function WelcomeScreen({ onStart, onAbout }) {
   return (
@@ -93,16 +155,11 @@ function WelcomeScreen({ onStart, onAbout }) {
       {/* Background */}
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: `url(${heroBg2})`,
+        backgroundImage: `url(${heroBg3})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center 20%',
       }} />
 
-      {/* Vignette */}
-      <div style={{
-        position: 'absolute', inset: 0,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.1) 25%, rgba(5,20,10,0.55) 55%, rgba(5,20,10,0.93) 100%)',
-      }} />
 
       {/* Title — 10% from top */}
       <div style={{ padding: '25% 24px 0', position: 'relative', zIndex: 1 }}>
@@ -111,11 +168,14 @@ function WelcomeScreen({ onStart, onAbout }) {
         </Eyebrow>
         <Display style={{ fontSize: 48, color: '#fff', textAlign: 'center', lineHeight: 0.95, textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.9)' }}>
           Think you're{' '}
-          <span style={{ color: '#2aa892', textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.9)' }}>SMART</span>{' '}
+          <span style={{ color: '#00ACAD', textShadow: '-2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 3px 8px rgba(0,0,0,0.9)' }}>SMART</span>{' '}
           about gun safety?
         </Display>
         <div style={{ width: 40, height: 3, background: P.rust, borderRadius: 2, marginTop: 20, marginLeft: 'auto', marginRight: 'auto' }} />
       </div>
+
+      <DraggableBadge src={securityBadge} initialX={-60} initialY={10} />
+      <DraggableBadge src={padlock} initialX={40} initialY={10} />
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
@@ -124,21 +184,15 @@ function WelcomeScreen({ onStart, onAbout }) {
       <div style={{ padding: '0 24px 12px', position: 'relative', zIndex: 1 }}>
         <button onClick={onStart}
           style={{
-            background: 'transparent', color: '#fff',
-            border: '2px solid rgba(255,255,255,0.9)',
+            background: P.rust, color: '#fff',
+            border: 'none',
             borderRadius: 999, padding: '16px 24px', width: '100%',
-            fontFamily: '"Archivo", sans-serif', fontSize: 16, fontWeight: 700,
+            fontFamily: '"Archivo", sans-serif', fontSize: 20, fontWeight: 700,
             letterSpacing: '-0.005em', cursor: 'pointer',
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            backdropFilter: 'blur(6px)',
-            WebkitBackdropFilter: 'blur(6px)',
           }}>
           <span>Take the quiz</span>
-          <span style={{
-            width: 32, height: 32, borderRadius: '50%',
-            background: P.rust, display: 'flex', alignItems: 'center',
-            justifyContent: 'center', fontSize: 16, lineHeight: 1,
-          }}>→</span>
+          <span style={{ fontSize: 18, lineHeight: 1 }}>→</span>
         </button>
         <div style={{ marginTop: 12, textAlign: 'center' }}>
           <Eyebrow color="#fff">No login · No data kept</Eyebrow>
@@ -1122,9 +1176,9 @@ function ResultsScreen({ score, total, onRetake }) {
                     url: 'https://jamanetwork.com/journals/jamanetworkopen',
                   },
                   {
-                    label: 'Q1: NH gun ownership rate (~41% of adults)',
-                    cite: 'CBS News / state gun ownership survey',
-                    url: 'https://www.cbsnews.com/pictures/gun-ownership-rates-by-state/',
+                    label: 'Q1: NH gun ownership rate (~41% of households)',
+                    cite: 'World Population Review / gun ownership by state',
+                    url: 'https://worldpopulationreview.com/state-rankings/gun-ownership-by-state',
                   },
                   {
                     label: 'Q2: 75% of kids know where the gun is stored',
@@ -1264,7 +1318,7 @@ function AboutScreen({ onBack }) {
 // ─── App root ──────────────────────────────────────────────────────────
 export default function App() {
   const [deck, setDeck] = useState(() => buildDeck());
-  const [screen, setScreen] = useState('welcome');
+  const [screen, setScreen] = useState(() => window.location.hash === '#results' ? 'results' : 'welcome');
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedIdx, setSelectedIdx] = useState(null);
   const [revealed, setRevealed] = useState(false);

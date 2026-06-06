@@ -6,7 +6,7 @@ export const QUESTIONS = [
       {
         text: 'About 75%',
         correct: false,
-        feedback: "Only 44% of gun-owning households with kids follow the safest storage practices. In NH, where about 41% of adults live in homes with firearms, that gap represents a lot of kids.",
+        feedback: "Only 44% of gun-owning households with kids follow the safest storage practices. In NH, about 41% of households have a gun — that gap represents a lot of kids.",
         source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
       {
@@ -18,7 +18,7 @@ export const QUESTIONS = [
       {
         text: 'About 44%',
         correct: true,
-        feedback: "Correct, and it surprises most people. Only 44% of gun-owning households with children store firearms locked and unloaded. The majority don't. In NH, where about 41% of adults live in homes with guns, that math adds up fast.",
+        feedback: "Correct, and it surprises most people. Only 44% of gun-owning households with children store firearms locked and unloaded. The majority don't. In NH, about 41% of households have a gun — that math adds up fast.",
         source: { label: 'Miller & Azrael, JAMA Network Open, 2022', url: 'https://jamanetwork.com/journals/jamanetworkopen/fullarticle/2789269' },
       },
       {
